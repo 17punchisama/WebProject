@@ -1,0 +1,195 @@
+﻿body {
+    background-color: #04346e;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .container h1 {
+        color: #e2e2b6;
+    }
+
+    .container p {
+        color: #e2e2b6;
+        font-size: 26px;
+    }
+
+form {
+    padding: 10px;
+}
+
+    form div {
+        position: relative;
+    }
+
+    form input {
+        width: 100%;
+        border-radius: .5rem;
+        background-color: #ffffe9;
+        font-size: 18px;
+        height: 5vh;
+    }
+
+.text-title p {
+    font-size: 16px;
+}
+
+.text-title label {
+    top: 40px;
+    font-size: 30px;
+}
+
+.text-title input {
+    height: 8vh;
+    font-size: xx-large;
+}
+
+.content-box ul {
+    list-style: none;
+    display: flex;
+    padding-left: 0;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    height: 60px;
+    padding: 10px 5px;
+    border-radius: 5px;
+    overflow: scroll;
+}
+
+    .tag-container input[type = "checkbox"] {
+        appearance: none;
+        position: absolute;
+        width: auto;
+        height: auto;
+    }
+
+    .tag-container label p {
+        font-size: 15px;
+        color: black;
+    }
+
+    .tag-container label {
+        position: relative;
+        font-size: 15px;
+        height: fit-content;
+        /* background-color: #e2e2b3; */
+        border: 1px solid white;
+        border-radius: 10px;
+        margin: 5px 5px;
+        padding: 2px;
+        text-align: start;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0,0.25);
+        transition: border 1s;
+    }
+
+    .tag-container input[type = "checkbox"]:checked + label {
+        border: 1px solid #04346e;
+    }
+
+.checkbox li {
+    position: relative;
+    width: 75px;
+    height: 50px;
+    text-align: center;
+    margin: 0 10px 10px 10px;
+}
+
+.checkbox input[type="checkbox"] {
+    appearance: none;
+    border-radius: 5px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-shadow: 15px 15px 25px rgba(0, 0, 0, 0.25);
+    transition: border 0.1s, background-color 1s;
+}
+
+.text-description textarea {
+    width: 100%;
+    height: 15vh;
+    font-size: medium;
+    resize: none;
+    border-radius: .5rem;
+    background-color: #ffffe9;
+}
+
+.text-description label {
+    top: 50px;
+}
+
+.checkbox input[type = "checkbox"]:checked {
+    border: 3px solid #6eacda;
+    background-color: #e2e2b3;
+}
+
+.checkbox label {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.people-period {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+}
+
+.people {
+    width: 56%;
+}
+
+    .people label {
+        top: 480px;
+        left: 330px;
+    }
+
+    .people .period {
+        flex: 1;
+    }
+
+.period {
+    width: 40%;
+}
+
+.location {
+    width: 80%;
+}
+
+form button {
+    width: 100%;
+    margin-top: 10lvh;
+    height: 7vh;
+    border-radius: .5rem;
+    font-size: 33px;
+    background-color: #6eacda;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+.error {
+    display: block;
+    padding-right: 10px;
+    margin-top:5px;
+    color: red;
+}

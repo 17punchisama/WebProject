@@ -1,0 +1,114 @@
+﻿@model WebProject.Models.ViewModels.RegisterViewModel;
+
+@{
+    Layout = "~/Views/Shared/_NoNavLayout.cshtml";
+    ViewData["Title"] = "Student Registration";
+    ViewData["Style"] = "Register";
+    ViewData["Script"] = "Register";
+}
+<div class="page_element">
+    <div class="left-element">
+        <img class="logo" src="/images/logo_peonpromt.png" alt="">
+        <p>เว็บค้นหากิจกรรมที่โดนใจคุณ<br>พร้อมกับเพื่อนร่วมอุดมการณ์อีกมากมาย<br>ที่จะไม่ทำให้คุณเหงาอีกต่อไป</p>
+        <img class="img-left" src="/images/1.png" alt="">
+    </div>
+    <div class="right-element">
+        <div class="register-box">
+            <h1>สมัครสมาชิก</h1>
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @* <div> *@
+                @*     @Html.TextBoxFor(m => m.UserName, new { placeholder = "User Name", required = "required" }) *@
+                @*     @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "error" }) *@
+                @* </div> *@
+                <div class="input-box">
+                    <input type="text" id="userName" name="UserName" asp-for="UserName" required/>
+                    <label asp-for="UserName" for="userName">ชื่อผู้ใช้</label>
+                    <span asp-validation-for="UserName" class="error"></span>
+                </div>
+        
+                @* <div> *@
+                @*     @Html.TextBoxFor(m => m.Email, new { type = "email", placeholder = "E-mail", required = "required" }) *@
+                @*     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "error" }) *@
+                @* </div> *@
+                <div class="input-box">
+                    <input type="e-mail" id="Email" name="Email" asp-for="Email" required/>
+                    <label asp-for="Email">อีเมล</label>
+                    <span asp-validation-for="Email" class="error"></span>
+                </div>
+
+                @* <div> *@
+                @*     @Html.TextBoxFor(m => m.TelNumber, new { type = "tel", placeholder = "Phone Number", required = "required" }) *@
+                @*     @Html.ValidationMessageFor(m => m.TelNumber, "", new { @class = "error" }) *@
+                @* </div> *@
+                <div class="input-box">
+                    <input type="tel" id="Tel" name="TelNumber" asp-for="TelNumber" required />
+                    <label asp-for="TelNumber">หมายเลขโทรศัพท์</label>
+                    <span asp-validation-for="TelNumber" class="error"></span>
+                </div>
+
+                @* <div> *@
+                @*     @Html.DropDownListFor(m => m.Year, new SelectList(new[] *@
+                @*              { *@
+                @* new { Value = "1", Text = "1st Year" }, *@
+                @* new { Value = "2", Text = "2nd Year" }, *@
+                @* new { Value = "3", Text = "3rd Year" }, *@
+                @* new { Value = "4", Text = "4th Year" } *@
+                @* }, "Value", "Text"), "Select Year", new { required = "required" }) *@
+                @*     @Html.ValidationMessageFor(m => m.Year, "", new { @class = "error" }) *@
+                @* </div> *@
+                <div class="input-box">
+                    <select id="Year" name="Year" asp-for="Year">
+                        <option value="">Select Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                    <label asp-for="Year" class="select-label">ชั้นปี</label>
+                    <span class="error" asp-validation-for="Year"></span>
+                </div>
+
+                @* <div> *@
+                @*     @Html.DropDownListFor(m => m.Gender, ViewBag.GenderList as IEnumerable<SelectListItem>, "Select Gender", new { required = "required" }) *@
+                @*     @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "error" }) *@
+                @* </div> *@
+                <div class="input-box">
+                    <select id="Gender" name="Gender" asp-for="Gender">
+                        <option value="">Select Gender</option>
+                        @foreach (var item in ViewBag.GenderList as IEnumerable<SelectListItem>)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                    <label asp-for="Gender" class="select-label">เพศ</label>
+                    <span class="error" asp-validation-for="Gender"></span>
+                </div>
+
+                <div class="input-box">
+                    @* @Html.PasswordFor(m => m.Password, new { placeholder = "Password", required = "required" }) *@
+                    @* @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error" }) *@
+                    <input type="password" id="password" asp-for="Password" required/>
+                    <label asp-for="Password" for="password">รหัสผ่าน</label>
+                    <span asp-validation-for="Password"></span>
+                </div>
+
+                <div class="input-box">
+                    @* @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password", required = "required" }) *@
+                    @* @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "error" }) *@
+                    <input type="password" id="confirmpassword" asp-for="ConfirmPassword" required />
+                    <label asp-for="ConfirmPassword" for="confirmpassword">ยืนยันรหัสผ่าน</label>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <span class="error" id="error-message">@error.ErrorMessage</span>
+                    }
+                </div>
+
+                <button type="submit" class="register-btn">สมัครบัญชี</button>
+            }
+        </div>
+    </div>
+</div>

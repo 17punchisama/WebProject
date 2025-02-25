@@ -1,0 +1,155 @@
+﻿* {
+    font-family: "IBM Plex Sans Thai";
+}
+
+/* ตั้งค่าสีพื้นหลัง */
+body {
+    background-color: #04346e;
+}
+
+/* โครงสร้างของหน้า */
+.page_element {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 900px
+    /* height: 100vh; */
+}
+
+/* องค์ประกอบทางซ้าย */
+.left-element {
+    display: grid;
+    place-items: center;
+}
+
+.logo {
+    padding-top: 30px;
+    width: 400px;
+    margin-bottom: -60px;
+}
+
+.left-element p {
+    color: #c1e5ff;
+    text-align: center;
+    font-size: 19px;
+}
+
+.img-left {
+    height: 55vh;
+    margin-top: -40px;
+}
+
+/* องค์ประกอบทางขวา */
+.right-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* height: 100vh; */
+    margin-bottom: 10px;
+}
+
+    .right-element h1 {
+        text-align: center;
+        font-size: 50px;
+        font-weight: normal;
+        color: #ffffe9;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+.register-box {
+    width: 100%;
+    /* height: 90vh; */
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 0 20px;
+    background: #6eacda;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.input-box {
+    width: 100%;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+    .input-box input,select {
+        width: 90%;
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 10px;
+        outline: none;
+        background-color: #ffffe9;
+        border: 1px solid #ffffe9;
+    }
+
+    .input-box label {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        font-size: 20px;
+        color: #04346e;
+        transition: 0.3s;
+        pointer-events: none;
+    }
+
+    .input-box .select-label {
+        top: 0px;
+        left: 7px;
+        font-size: 12px;
+        padding: 0 5px;
+    }
+
+    .input-box input:focus + label,
+    .input-box input:valid + label {
+        top: 0px;
+        left: 7px;
+        font-size: 12px;
+        padding: 0 5px;
+    }
+
+.register-btn {
+    width: 60%;
+    padding: 12px;
+    background: #032a5c;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 12px;
+}
+
+    .register-btn:hover {
+        background: #ffffe9;
+        color: #032a5c;
+    }
+
+.error{
+    display: block;
+    padding-right: 10px;
+    color: red;
+}
+
+@media only screen and (orientation: portrait) {
+    .page_element {
+        display: block;
+    }
+
+    .left-element {
+        display: none;
+    }
+
+    .register-box {
+        width: 75vw;
+    }
+}

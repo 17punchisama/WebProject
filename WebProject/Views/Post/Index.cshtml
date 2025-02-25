@@ -1,0 +1,58 @@
+﻿@model WebProject.Models.Post;
+@using WebProject.Models;
+@using Microsoft.AspNetCore.Identity;
+@using WebProject.Models.Helper;
+@inject SignInManager<User> signInManager;
+@inject UserManager<User> userManager;
+@{
+    ViewData["Title"] = "Post Detail";
+    ViewData["Style"] = "Post";
+    ViewData["Script"] = "Post";
+}
+<div class="container">
+    <div class="owner">
+        <div class="profile"></div>
+        <h2>กิจกรรมของ<a asp-controller="Account" asp-action="Profile" asp-route-id="@Model.Owner.Id">@Model.Owner.Name</a></h2>
+    </div>
+    <div class="content-container">
+        <div class="content">
+            <h1>@Model.Title</h1>
+            <p>@Model.Description</p>
+            <ul class="tag">
+                @foreach (var pt in Model.PostTags){
+                    <li>@pt.Tag.Name</li>
+                }
+            </ul>
+            <p>
+                เพศ :
+                @string.Join(",", Model.RequiredGenders.Select(g =>
+                         g == Gender.Male ? "ชาย" :
+                         g == Gender.Female ? "หญิง" :
+                         g == Gender.LGTV ? "คต." : ""))
+                | ชั้นปี : @string.Join(",", Model.Years)
+                | @Model.EndDate.ToString("dd MMMM yyyy")</p>
+             </p>
+            <ul class="detail">
+                <li>จำนวนผู้เข้าร่วม 3 คน</li>
+                <li>เหลือระยะเวลาการสมัครอีก 3 วัน</li>
+            </ul>
+            @if (Model.ParticipantPosts.Count < Model.ParticipantAmount)
+            {
+                if (signInManager.IsSignedIn(User)){
+                    var user = await userManager.GetUserAsync(User);
+                    if (Model.ParticipantPosts.Any(pp => pp.UserId == user.Id)){
+                        <button asp-controller="Post" asp-action="Cancle" asp-route-postid="@Model.Id">ยกเลิกการเข้าร่วม</button>
+                    }else{
+                        if (user.Id == Model.OwnerId){
+                            <button asp-controller="Post" asp-action="Close" asp-route-postid="@Model.Id">ปิดกิจกรรม</button>
+                        }else{
+                            <button asp-controller="Post" asp-action="join" asp-route-postid="@Model.Id">+ เข้าร่วมกิจกรรม</button>
+                        }
+                    }
+                }
+            }else{
+                <div>เต็ม</div>
+            }
+        </div>
+    </div>
+</div>

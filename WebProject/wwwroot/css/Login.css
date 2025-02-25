@@ -1,0 +1,159 @@
+﻿* {
+    font-family: "IBM Plex Sans Thai";
+}
+
+body {
+    background-color: #04346e;
+}
+
+.page_element {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+}
+
+.left-element {
+    display: grid;
+    place-items: center;
+}
+
+.logo {
+    padding-top: 30px;
+    width: 400px;
+    margin-bottom: -60px;
+}
+
+.left-element p {
+    color: #c1e5ff;
+    text-align: center;
+    font-size: 19px;
+}
+
+.img-left {
+    height: 55vh;
+    margin-top: -40px;
+}
+
+.right-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+    .right-element h1 {
+        text-align: center;
+        font-size: 50px;
+        font-weight: normal;
+        color: #ffffe9;
+        margin-top: -20px;
+        margin-bottom: 10px;
+    }
+
+.login-box {
+    width: 100%;
+    height: 59vh;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    background: #6eacda;
+    border-radius: 10px;
+}
+
+    .login-box h1 {
+        margin: 0 0;
+    }
+
+.input-box {
+    width: 100%;
+    position: relative;
+    margin-bottom: 27px;
+}
+
+    .input-box input {
+        width: 90%;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 10px;
+        outline: none;
+        background-color: #ffffe9;
+        border: 1px solid #ffffe9;
+    }
+
+    .input-box label {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        font-size: 20px;
+        color: #04346e;
+        transition: 0.3s;
+        pointer-events: none;
+    }
+
+    .input-box input:focus + label,
+    .input-box input:valid + label {
+        top: 3px;
+        left: 10px;
+        font-size: 12px;
+        padding: 0 5px;
+    }
+
+
+
+    .input-box i:hover {
+        color: #04346e;
+    }
+
+.login-btn {
+    width: 60%;
+    padding: 12px;
+    background: #032a5c;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+    display: block;
+    margin: 0 auto;
+}
+
+    .login-btn:hover {
+        background: #ffffe9;
+        color: #032a5c;
+    }
+
+.register-link {
+    margin-top: -20px;
+    margin-bottom: 60px;
+    color: #04346e;
+}
+
+    .register-link a {
+        color: #04346e;
+    }
+
+.error{
+    color:red;
+    text-align: center;
+}
+
+@media only screen and (orientation: portrait) {
+    .left-element {
+        display: none;
+    }
+
+    .page_element {
+        display: block;
+    }
+
+    .login-box {
+        width: 300px;
+    }
+}

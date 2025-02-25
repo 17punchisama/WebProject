@@ -1,0 +1,97 @@
+﻿@model WebProject.Models.ViewModels.CreatePostViewModel;
+@using WebProject.Models.Helper;
+@{
+	ViewData["Title"] = "CreatePost";
+	ViewData["Style"] = "CreatePost";
+}
+
+<div class="container">
+	<div class="content-box">
+		<h1>กิจกรรมแบบไม่มีรายได้</h1>
+		<form asp-controller="Post" asp-action="Create" method="post">
+			<div class="text-title">
+				<p>*กรุณางดใช้ชื่อผลงาน ที่สื่อถึงกิจกรรมทางเพศ มีสถานการณ์ยั่วยุทางเพศ หรือสื่อถึงอวัยวะเพศ</p>
+				<input type="text" id="title" asp-for="Title" placeholder="ชื่อกิจกรรม">
+				<span asp-validation-for="Title" class="error"></span>
+				<!-- <label for="title">ชื่อกิจกรรม</label> -->
+			</div>
+			<div class="text-description">
+				<p>คำโปรย</p>
+				<textarea id="description" placeholder="เพิ่มคำโปรยสั้นๆ" asp-for="Description"></textarea>
+				<span asp-validation-for="Description" class="error"></span>
+				<!-- <label for="description">เพิ่มคำโปรยสั้นๆ</label> -->
+			</div>
+			<div class="text-tag">
+				<p>แท็ก</p>
+				<div class="tag-container">
+					@foreach (var tag in Model.Tags){
+						var isChecked = Model.SelectedTagsId != null && Model.SelectedTagsId.Contains(tag.Id);
+						<input type="checkbox" id="@tag.Name" value="@tag.Id" name="SelectedTagsId" @(isChecked ? "checked" : "")>
+						<label for="@tag.Name"><p>@tag.Name</p></label>
+					}
+				</div>
+				<span asp-validation-for="SelectedTagsId" class="error"></span>
+			</div>
+			<div class="date-age-gender">
+				<div class="date-selector">
+					<p>วันและเวลาของกิจกรรม</p>
+					<input id="date" type="datetime-local" asp-for="EndDate">
+					<span class="error" asp-validation-for="EndDate"></span>
+				</div>
+				<div class="year">
+					<p>ชั้นปี</p>
+					<ul class="checkbox">
+						@foreach (var year in new[] { 1, 2, 3, 4 })
+						{
+							var isChecked = Model.Years != null && Model.Years.Contains(year);
+							<li>
+								<input type="checkbox" value="@year" name="Years" id="@($"year{year}")" @(isChecked ? "checked" : "")>
+								<label for="@($"year{year}")">ปี@year</label>
+							</li>
+						}
+					</ul>
+					<span asp-validation-for="Years" class="error"></span>
+				</div>
+				<div class="gender">
+					<p>เพศ</p>
+					<ul class="checkbox">
+						@{
+							Func<Gender, string> isCheck = gender =>
+							Model.RequiredGenders != null && Model.RequiredGenders.Contains(gender) ? "checked" : "";
+						}
+
+						<li>
+							<input type="checkbox" value="0" name="RequiredGenders" id="Male" @isCheck(Gender.Male)>
+							<label for="Male">ชาย</label>
+						</li>
+						<li>
+							<input type="checkbox" value="1" name="RequiredGenders" id="Female" @isCheck(Gender.Female)>
+							<label for="Female">หญิง</label>
+						</li>
+						<li>
+							<input type="checkbox" value="2" name="RequiredGenders" id="LGTV" @isCheck(Gender.LGTV)>
+							<label for="LGTV">คต</label>
+						</li>
+					</ul>
+					<span asp-validation-for="RequiredGenders" class="error"></span>
+				</div>
+			</div>
+			<div class="people-period">
+				<div class="people">
+					<p>จำนวนคนเข้าร่วมกิจกรรม</p>
+					<input type="number" id="people-amount">
+				</div>
+				<div class="period">
+					<p>ระยะเวลารับสมัคร</p>
+					<input type="datetime-local">
+				</div>
+			</div>
+			<div class="location">
+				<p>สถานที่</p>
+				<input type="text">
+
+			</div>
+			<button type="submit">สร้างกิจกรรม</button>
+		</form>
+	</div>
+</div>
