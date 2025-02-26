@@ -13,9 +13,6 @@
 }
 
 body {
-/*    display: flex;
-    flex-direction: column;
-    align-items: center;*/
     background-color: #04346e;
 }
 
@@ -74,7 +71,7 @@ body {
     background-color: #04346e;
 }
 
-.content a {
+.content a, .full {
     position: absolute;
     text-decoration: none;
     top: 0;
@@ -100,6 +97,50 @@ body {
     color: #7bc8ff;
     background-color: #04346e;
 }
+.content .full{
+    color:black;
+    background-color: red;
+    cursor: none;
+}
+
+.participant {
+    background-color: #ffffe9;
+    border-radius: .5rem;
+    display: none;
+}
+
+    .participant h3 {
+        color: #04346e;
+    }
+
+.comment-container {
+    background-color: #ffffe9;
+    border-radius: .5rem;
+    max-width: 60vw;
+    position: relative;
+    padding: 5px 30px 10px 30px;
+    margin-bottom: 20px;
+}
+
+.comment {
+    padding: 5px;
+    margin: 5px;
+    margin-bottom: 7px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px;
+}
+
+.comments {
+    margin-bottom: 30px;
+}
+
+form {
+    margin: auto;
+}
+
+    form input {
+        width: auto;
+    }
 
 @media screen and (orientation: portrait) {
     .content ul {

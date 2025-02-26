@@ -7,6 +7,7 @@
 @{
     ViewData["Title"] = "Post Detail";
     ViewData["Style"] = "Post";
+    ViewData["Script"] = "Post";
 }
 <div class="container">
     <div class="owner">
@@ -32,17 +33,17 @@
                 | @Model.EndDate.ToString("dd MMMM yyyy")</p>
              </p>
             <ul class="detail">
-                <li>จำนวนผู้เข้าร่วม @Model.ParticipantPosts.Count() คน</li>
+                <li class="participant-amount">จำนวนผู้เข้าร่วม @Model.ParticipantPosts.Count() คน</li>
                 <li>เหลือระยะเวลาการสมัครอีก 3 วัน</li>
             </ul>
             @if (Model.ParticipantPosts.Count < Model.ParticipantAmount)
             {
                 if (signInManager.IsSignedIn(User)){
                     var user = await userManager.GetUserAsync(User);
-                    if (Model.ParticipantPosts.Any(pp => pp.UserId == user.Id)){
+                    if (user != null && Model.ParticipantPosts.Any(pp => pp.UserId == user.Id)){
                         <a class="cancle" asp-controller="Post" asp-action="Cancle" asp-route-postid="@Model.Id">ยกเลิกการเข้าร่วม</a>
                     }else{
-                        if (user.Id == Model.OwnerId){
+                        if (user != null && user.Id == Model.OwnerId){
                             <a class="close" asp-controller="Post" asp-action="Close" asp-route-postid="@Model.Id">ปิดกิจกรรม</a>
                         }else{
                             <a class="join" asp-controller="Post" asp-action="Join" asp-route-postid="@Model.Id">+ เข้าร่วมกิจกรรม</a>
@@ -50,8 +51,36 @@
                     }
                 }
             }else{
-                <div>เต็ม</div>
+                <a class="full">เต็ม</a>
             }
         </div>
+    </div>
+    @if (Model.ParticipantPosts?.Any() == true)
+    {
+        <div class="participant">
+            <h3>ผู้เข้าร่วม</h3>
+            <ol>
+                @foreach (var pp in Model.ParticipantPosts)
+                {
+                    <li>@pp.User.Name</li>
+                }
+            </ol>
+        </div>
+    }
+    <div class="comment-container">
+        <h2>Comment</h2>
+        <div class="comments">
+           @foreach (var comment in Model.Comments){
+                <div class="comment">
+                    <h4>@comment.User.Name</h4>
+                    <p>@comment.Description</p>
+                </div>
+           }
+        </div>
+        <form asp-controller="Post" asp-action="AddComment" method="post">
+            <input type="hidden" name="PostId" value="@Model.Id" />
+            <input type="text" name="Description" id="Description" />
+            <button type="submit">ส่ง</button>
+        </form>
     </div>
 </div>

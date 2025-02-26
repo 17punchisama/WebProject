@@ -2,16 +2,12 @@
 {
     public class Comment
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Description {  get; set; }
 
 
+        public Guid PostId { get; set; }
         public string UserId { get; set; }
-        public User? user { get; set; }
-
-        public string ParentCommentId {  get; set; }
-        public Comment? ParentComment { get; set; }
-
-        public List<Comment> ReplyComments { get; set; }
+        public virtual User User { get; set; }
     }
 }

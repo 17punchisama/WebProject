@@ -38,6 +38,9 @@ namespace WebProject.Controllers
                 .Include(p => p.PostTags) // Include the list of PostTag
                     .ThenInclude(pt => pt.Tag)
                 .Include(p => p.ParticipantPosts)
+                    .ThenInclude(pp => pp.User)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.User)
                 .Include(p => p.Owner)    // Include the User (Owner)
                 .FirstOrDefaultAsync();
             return View(model);
@@ -146,6 +149,23 @@ namespace WebProject.Controllers
                     .ExecuteDeleteAsync();
 
             return RedirectToAction("Index", new { id = postid });
+        }
+        [Authorize]
+        public async Task<IActionResult> AddComment(Guid PostId, string Description)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                var commment = new Comment()
+                {
+                    Description = Description,
+                    PostId = PostId,
+                    UserId = user.Id
+                };
+                _context.Comments.Add(commment);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", new { id = PostId });
         }
     }
 }

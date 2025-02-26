@@ -14,6 +14,7 @@ namespace WebProject.Models
 
 
         public virtual ICollection<PostTag> PostTags { get; set; } = new HashSet<PostTag>();
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public virtual ICollection<ParticipantPost> ParticipantPosts { get; set; } = new HashSet<ParticipantPost>();
 
         public string OwnerId { get; set; }

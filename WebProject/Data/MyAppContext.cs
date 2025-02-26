@@ -15,6 +15,7 @@ namespace WebProject.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
         public DbSet<ParticipantPost> ParticipantPosts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -55,6 +56,18 @@ namespace WebProject.Data
                 .WithMany(u => u.ParticipantPosts)
                 .HasForeignKey(pp => pp.UserId)
                 .OnDelete(DeleteBehavior.Restrict); // Cascade delete when User is deleted
+
+            builder.Entity<Comment>()
+                .HasOne(c => c.User) 
+                .WithMany() 
+                .HasForeignKey(c => c.UserId) 
+                .OnDelete(DeleteBehavior.Restrict); 
+
+            builder.Entity<Comment>()
+                .HasOne<Post>() 
+                .WithMany(p => p.Comments) 
+                .HasForeignKey(c => c.PostId) 
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

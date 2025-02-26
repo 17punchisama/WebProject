@@ -3,6 +3,7 @@
 @{
 	ViewData["Title"] = "CreatePost";
 	ViewData["Style"] = "CreatePost";
+	ViewData["Script"] = "CreatePost";
 }
 
 <div class="container">
@@ -26,7 +27,7 @@
 				<div class="tag-container">
 					@foreach (var tag in Model.Tags){
 						var isChecked = Model.SelectedTagsId != null && Model.SelectedTagsId.Contains(tag.Id);
-						<input type="checkbox" id="@tag.Name" value="@tag.Id" name="SelectedTagsId" @(isChecked ? "checked" : "")>
+						<input type="checkbox" class="tag-checkbox" id="@tag.Name" value="@tag.Id" name="SelectedTagsId" @(isChecked ? "checked" : "")>
 						<label for="@tag.Name"><p>@tag.Name</p></label>
 					}
 				</div>
