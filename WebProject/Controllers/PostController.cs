@@ -117,10 +117,35 @@ namespace WebProject.Controllers
         [Authorize]
         public async Task<IActionResult> Join(Guid postid)
         {
+            var user = await _userManager.GetUserAsync(User);
             var post = await _context.Posts
-                    .Include(p => p.ParticipantPosts)
-                    .FirstOrDefaultAsync(p => p.Id == postid);
+                        .Where(p => p.Id == postid)
+                        .Include(p => p.ParticipantPosts)
+                        .FirstOrDefaultAsync();
+            if(post != null)
+            {
+                if (post.ParticipantPosts.Count < post.ParticipantAmount && !post.ParticipantPosts.Any(pp => pp.UserId == user.Id) && user.Id != post.OwnerId)
+                {
+                    var participantpost = new ParticipantPost()
+                    {
+                        UserId = user.Id,
+                        PostId = postid
+                    };
+                    _context.ParticipantPosts.Add(participantpost);
+                    await _context.SaveChangesAsync();
+                }
+            }
             return RedirectToAction("Index", new {id = postid});
+        }
+        [Authorize]
+        public async Task<IActionResult> Cancle(Guid postid)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            await _context.ParticipantPosts
+                    .Where(pp => pp.PostId == postid && pp.UserId == user.Id)
+                    .ExecuteDeleteAsync();
+
+            return RedirectToAction("Index", new { id = postid });
         }
     }
 }

@@ -7,7 +7,6 @@
 @{
     ViewData["Title"] = "Post Detail";
     ViewData["Style"] = "Post";
-    ViewData["Script"] = "Post";
 }
 <div class="container">
     <div class="owner">
@@ -33,7 +32,7 @@
                 | @Model.EndDate.ToString("dd MMMM yyyy")</p>
              </p>
             <ul class="detail">
-                <li>จำนวนผู้เข้าร่วม 3 คน</li>
+                <li>จำนวนผู้เข้าร่วม @Model.ParticipantPosts.Count() คน</li>
                 <li>เหลือระยะเวลาการสมัครอีก 3 วัน</li>
             </ul>
             @if (Model.ParticipantPosts.Count < Model.ParticipantAmount)
@@ -41,12 +40,12 @@
                 if (signInManager.IsSignedIn(User)){
                     var user = await userManager.GetUserAsync(User);
                     if (Model.ParticipantPosts.Any(pp => pp.UserId == user.Id)){
-                        <button asp-controller="Post" asp-action="Cancle" asp-route-postid="@Model.Id">ยกเลิกการเข้าร่วม</button>
+                        <a class="cancle" asp-controller="Post" asp-action="Cancle" asp-route-postid="@Model.Id">ยกเลิกการเข้าร่วม</a>
                     }else{
                         if (user.Id == Model.OwnerId){
-                            <button asp-controller="Post" asp-action="Close" asp-route-postid="@Model.Id">ปิดกิจกรรม</button>
+                            <a class="close" asp-controller="Post" asp-action="Close" asp-route-postid="@Model.Id">ปิดกิจกรรม</a>
                         }else{
-                            <button asp-controller="Post" asp-action="join" asp-route-postid="@Model.Id">+ เข้าร่วมกิจกรรม</button>
+                            <a class="join" asp-controller="Post" asp-action="Join" asp-route-postid="@Model.Id">+ เข้าร่วมกิจกรรม</a>
                         }
                     }
                 }

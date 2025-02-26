@@ -74,18 +74,31 @@ body {
     background-color: #04346e;
 }
 
-.content button {
+.content a {
     position: absolute;
+    text-decoration: none;
     top: 0;
     right: 0;
     margin: 5px 15px;
     border-radius: 10px;
     padding: 5px;
-    background-color: #7bc8ff;
-    color: white;
     font-size: 20px;
     border-width: 1px;
     cursor: pointer;
+}
+
+.content .join {
+    color: white;
+    background-color: #7bc8ff;
+    border: 1px solid black;
+}
+.content .cancle {
+    color: black;
+    background-color: darkorange;
+}
+.content .close {
+    color: #7bc8ff;
+    background-color: #04346e;
 }
 
 @media screen and (orientation: portrait) {
@@ -99,7 +112,7 @@ body {
         min-width:auto;
     }
 
-        .content button {
+        .content a {
             position: static;
             align-self: center;
             margin: 20px 0 0 0;
