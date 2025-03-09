@@ -1,18 +1,50 @@
 ﻿@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+@using System.Security.Claims;
 @using WebProject.Models;
+@using WebProject.Data;
 @inject SignInManager<User> signInManager;
+@inject MyAppContext MyDbContext;
 
 @if (signInManager.IsSignedIn(User))
 {
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    var currentUser = await MyDbContext.Users
+        .Include(u => u.Notifications.Where(n => n.Isread))  // ✅ Load only read notifications
+        .FirstOrDefaultAsync(u => u.Id == userId);
     <ul>
+		<li><i class="fa-solid fa-bell"><div class="red-dot"></div></i></li>
         <li><i class="fa-solid fa-pen"></i></li>
         <li><i class="fa-solid fa-magnifying-glass"></i></li>
         <li><i class="fa-solid fa-user"></i></li>
     </ul>
+    <div class="noti-container">
+        <div class="notread"></div>
+        <div class="read">
+            @foreach (var noti in currentUser.Notifications){
+                if (noti.Type){
+                    <a asp-controller="Notification" asp-action="Index" asp-route-id="@noti.Id">
+                        <div class="noti">
+                            <h5>คุณได้เข้าร่วม</h5>
+                            <p>@noti.PostName</p>
+                        </div>
+                    </a>
+                }
+                else{
+                    <div class="noti">
+                        <h5>กิจกรรมถูกยกเลิก</h5>
+                        <p>@noti.PostName</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
     <div class="account-nav">
         <a asp-controller="Account" asp-action="Profile"><p>โปรไฟล์</p></a>
         <a asp-controller="Account" asp-action="Logout"><p>ออกจากระบบ</p></a>
+        <a asp-controller="Account" asp-action="Activity"><p>กิจกรรมของคุณ</p></a>
     </div>
+    <script src="~/js/RealtimeNotification.js" asp-append-version="true"></script>
 }
 else
 {

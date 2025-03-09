@@ -6,6 +6,7 @@ using WebProject.Data;
 using WebProject.Models;
 using WebProject.Models.Helper;
 using WebProject.Models.ViewModels;
+using WebProject.Services;
 
 namespace WebProject.Controllers
 {
@@ -14,25 +15,16 @@ namespace WebProject.Controllers
 
         private readonly MyAppContext _context;
         private readonly UserManager<User> _userManager;
-        public PostController(MyAppContext context, UserManager<User> userManager)
+        private readonly PostService _postService;
+        public PostController(MyAppContext context, UserManager<User> userManager, PostService postService)
         {
             _context = context;
             _userManager = userManager;
+            _postService = postService;
         }
 
         public async Task<IActionResult> Index(Guid id)
         {
-            //Post post = new()
-            //{
-            //    Title = "test123",
-            //    Description = "test nigga i love ในหลง",
-            //    Years = new List<int> { 2, 3, 4 },
-            //    RequiredGenders = new List<Gender> { Gender.Male, Gender.Female },
-            //    EndDate = DateTime.Now,
-            //    Owner = await _userManager.GetUserAsync(User)
-            //};
-            //post.PostTags.Add(new PostTag { Tag = new Tag { Name = "เยิ้มๆ" } });
-
             var model = await _context.Posts
                 .Where(p => p.Id == id)
                 .Include(p => p.PostTags) // Include the list of PostTag
@@ -45,14 +37,6 @@ namespace WebProject.Controllers
                 .FirstOrDefaultAsync();
             return View(model);
         }
-
-        //public IActionResult Index(string id)
-        //{
-        //    //get post by id
-        //    //var model = _context.Posts.Where(p => p.Id == id);
-        //    var model = "test";
-        //    return View(model);
-        //}
 
         [HttpGet]
         [Authorize]
@@ -79,9 +63,11 @@ namespace WebProject.Controllers
                         {
                             Title = model.Title,
                             Description = model.Description,
+                            ParticipantAmount = model.ParticipantAmount,
                             Years = model.Years,
                             RequiredGenders = model.RequiredGenders,
                             EndDate = model.EndDate,
+                            Location = model.Location,
                             OwnerId = user.Id
                         };
                         _context.Posts.Add(post);
@@ -121,21 +107,24 @@ namespace WebProject.Controllers
         public async Task<IActionResult> Join(Guid postid)
         {
             var user = await _userManager.GetUserAsync(User);
-            var post = await _context.Posts
+            if (user != null) 
+            {
+                var post = await _context.Posts
                         .Where(p => p.Id == postid)
                         .Include(p => p.ParticipantPosts)
                         .FirstOrDefaultAsync();
-            if(post != null)
-            {
-                if (post.ParticipantPosts.Count < post.ParticipantAmount && !post.ParticipantPosts.Any(pp => pp.UserId == user.Id) && user.Id != post.OwnerId)
+                if (post != null)
                 {
-                    var participantpost = new ParticipantPost()
+                    if (post.ParticipantPosts.Count < post.ParticipantAmount && !post.ParticipantPosts.Any(pp => pp.UserId == user.Id) && user.Id != post.OwnerId)
                     {
-                        UserId = user.Id,
-                        PostId = postid
-                    };
-                    _context.ParticipantPosts.Add(participantpost);
-                    await _context.SaveChangesAsync();
+                        var participantpost = new ParticipantPost()
+                        {
+                            UserId = user.Id,
+                            PostId = postid
+                        };
+                        _context.ParticipantPosts.Add(participantpost);
+                        await _context.SaveChangesAsync();
+                    }
                 }
             }
             return RedirectToAction("Index", new {id = postid});
@@ -149,6 +138,23 @@ namespace WebProject.Controllers
                     .ExecuteDeleteAsync();
 
             return RedirectToAction("Index", new { id = postid });
+        }
+        [Authorize]
+        public async Task<IActionResult> Close(Guid PostId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null) 
+            {
+                var post = await _context.Posts
+                            .Where(p => p.Id == PostId)
+                            .FirstOrDefaultAsync();
+                if (post.OwnerId == user.Id)
+                {
+                    await _postService.ClosePostsAsync(post);
+                    return RedirectToAction("Index", new { id = PostId });
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
         [Authorize]
         public async Task<IActionResult> AddComment(Guid PostId, string Description)

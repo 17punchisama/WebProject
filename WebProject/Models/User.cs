@@ -12,6 +12,8 @@ namespace WebProject.Models
 
         public ICollection<Post> Posts { get; set; } = new List<Post>();
 
+        public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+
         public virtual ICollection<ParticipantPost> ParticipantPosts { get; set; } = new HashSet<ParticipantPost>();
     }
 }

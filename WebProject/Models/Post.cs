@@ -11,6 +11,8 @@ namespace WebProject.Models
         public List<int> Years { get; set; } = [];
         public List<Gender> RequiredGenders { get; set; } = [];
         public DateTime EndDate { get; set; }
+        public string Location { get; set; }
+        public bool IsClosed { get; set; } = false;
 
 
         public virtual ICollection<PostTag> PostTags { get; set; } = new HashSet<PostTag>();

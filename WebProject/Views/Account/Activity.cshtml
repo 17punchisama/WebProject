@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@{
+    ViewData["Title"] = "Activity Page";
+    ViewData["Style"] = "Activity";
+    ViewData["Script"] = "Activity";
+}
+@inject UserManager<User> userManager;
+@{
+    var user = await userManager.GetUserAsync(User);
+}
+<div class="main-container">
+    <div class="container">
+        <div class="owner">
+            <img src="/images/1.png" alt="">
+            <div class="small-box">
+                <h2>สวัสดี @user.Name</h2>
+                <a asp-controller="Account" asp-action="Profile" class="profile-link">ดูข้อมูลโปรไฟล์</a>
+            </div>
+        </div>
+        <div class="content-container">
+            <h2>กิจกรรมของคุณ</h2>
+            <div class="show-myActivity"></div>
+
+            <h2>กิจกรรมที่คุณเข้าร่วม</h2>
+            <div class="joined-activity"></div>
+        </div>
+
+        <div class="popup-modal" id="popupModal">
+            <div class="popup-content">
+                <span class="close-btn" id="closeBtn">&times;</span>
+                <h2>กิจกรรมทั้งหมด</h2>
+                <div id="popupActivityList"></div>
+            </div>
+        </div>
+    </div>
+</div>

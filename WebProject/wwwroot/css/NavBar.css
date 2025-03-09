@@ -3,12 +3,18 @@
     font-family: "IBM Plex Sans Thai";
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 .nav-bar img {
     width: 200px;
     margin-left: 20px;
 }
 
 .nav-bar {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,6 +37,7 @@
             background-color: #04346e;
             border-radius: 50%;
             padding: 10px 10px;
+            cursor: pointer;
         }
 
             .nav-bar ul li i {
@@ -39,6 +46,21 @@
                 margin: 1px;
             }
 
+            .nav-bar ul li i.fa-solid.fa-bell{
+                position: relative;
+            }
+
+.nav-bar .red-dot{
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    left: 100%;
+    top: 100%;
+    z-index:1;
+    display:none;
+}
 #create-box {
     display: none;
     padding: 20px;
@@ -96,6 +118,43 @@
     .account-nav a {
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     }
+
+.noti-container {
+    position: absolute;
+    top: 100%;
+    right: 70px;
+    width: 200px;
+    padding: 10px 0 0 0;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 5px;
+    height: 200px;
+    overflow: scroll;
+    overflow-x: hidden;
+    z-index: 1;
+    display: none;
+}
+
+.noti {
+    margin: 0 10px 2px 10px;
+    padding: 2px;
+    box-shadow: 0 0 5px;
+    text-align:initial;
+}
+
+    .noti * {
+        font-size: 12px;
+    }
+
+.notread .noti {
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.read .noti {
+    border-radius: 2px;
+    font-weight: normal;
+}
 
 @media only screen and (orientation: portrait) {
 

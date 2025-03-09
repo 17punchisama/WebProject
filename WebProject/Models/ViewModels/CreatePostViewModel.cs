@@ -10,6 +10,8 @@ namespace WebProject.Models.ViewModels
         [Required]
         public string Description { get; set; }
         [Required]
+        public int ParticipantAmount { get; set; }
+        [Required]
         public List<int> Years { get; set; }
         [Required]
         public List<Gender> RequiredGenders { get; set; }
@@ -18,6 +20,8 @@ namespace WebProject.Models.ViewModels
         public List<Guid> SelectedTagsId { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
-        
+        [Required]
+        public string Location { get; set; }
+
     }
 }

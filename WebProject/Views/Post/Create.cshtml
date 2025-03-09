@@ -80,7 +80,8 @@
 			<div class="people-period">
 				<div class="people">
 					<p>จำนวนคนเข้าร่วมกิจกรรม</p>
-					<input type="number" id="people-amount">
+					<input type="number" id="people-amount" asp-for="ParticipantAmount" required>
+					<span asp-validation-for="ParticipantAmount" class="error"></span>
 				</div>
 				<div class="period">
 					<p>ระยะเวลารับสมัคร</p>
@@ -89,8 +90,8 @@
 			</div>
 			<div class="location">
 				<p>สถานที่</p>
-				<input type="text">
-
+				<input type="text" asp-for="Location" required>
+				<span asp-validation-for="Location" class="error"></span>
 			</div>
 			<button type="submit">สร้างกิจกรรม</button>
 		</form>

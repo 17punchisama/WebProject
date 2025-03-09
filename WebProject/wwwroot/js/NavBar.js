@@ -24,7 +24,7 @@
 
             document.getElementById('no-revenue-btn').onclick = function () {
                 console.log("Clicked No Revenue Button");
-                window.location.href = 'page_create_post.html';
+                window.location.href = '/Post/Create';
             };
             document.getElementById('revenue-btn').onclick = function () {
                 console.log("Clicked Revenue Button");
@@ -35,6 +35,8 @@
 
     let accountNav = document.querySelector(".account-nav");
     let userIcon = document.querySelector('.fa-solid.fa-user');
+    let notiIcon = document.querySelector('.fa-solid.fa-bell');
+    let notiCon = document.querySelector(".noti-container");
 
     userIcon.onclick = function () {
         console.log("User icon clicked");
@@ -43,6 +45,16 @@
             accountNav.style.display = 'none';
         } else {
             accountNav.style.display = 'block';
+        }
+    };
+
+    notiIcon.onclick = function () {
+        console.log("User icon clicked");
+
+        if (notiCon.style.display === 'block') {
+            notiCon.style.display = 'none';
+        } else {
+            notiCon.style.display = 'block';
         }
     };
 });

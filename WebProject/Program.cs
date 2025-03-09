@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebProject.Data;
 using WebProject.Models;
+using WebProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,9 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
 });
 
+builder.Services.AddSingleton<BackgroundTask>();
+builder.Services.AddScoped<PostService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -74,5 +78,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+// Start the background task
+var backgroundTask = app.Services.GetRequiredService<BackgroundTask>();
+var cancellationTokenSource = new CancellationTokenSource();
+Task.Run(() => backgroundTask.StartAsync(cancellationTokenSource.Token));
 
 app.Run();

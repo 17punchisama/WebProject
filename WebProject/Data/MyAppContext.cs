@@ -16,6 +16,7 @@ namespace WebProject.Data
         public DbSet<PostTag> PostTags { get; set; }
         public DbSet<ParticipantPost> ParticipantPosts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -67,6 +68,12 @@ namespace WebProject.Data
                 .HasOne<Post>() 
                 .WithMany(p => p.Comments) 
                 .HasForeignKey(c => c.PostId) 
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Notification>()
+                .HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
