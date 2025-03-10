@@ -1,0 +1,150 @@
+﻿body {
+    background-color: #04346e;
+}
+.search-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 16px;
+    position: relative;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #ffffe9;
+}
+
+.clear-search {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    font-size: 20px;
+}
+
+/* Navigation tabs */
+.nav-tabs {
+    display: flex;
+    gap: 20px;
+    padding: 0 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-tab {
+    color: #fdfdf0;
+    padding: 12px 4px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 16px;
+    position: relative;
+}
+
+    .nav-tab.active {
+        color: #fdfdf0;
+        font-weight: bold;
+    }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #fdfdf0;
+        }
+
+/* Movie cards grid */
+.activity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.activity-card {
+    background-color: #ffffe9;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 16px;
+    cursor: pointer; /* เพิ่ม cursor pointer เพื่อแสดงว่าคลิกได้ */
+    transition: transform 0.2s, box-shadow 0.2s; /* เพิ่ม transition effect */
+}
+
+    .activity-card:hover {
+        transform: translateY(-5px); /* ยกการ์ดขึ้นเล็กน้อยเมื่อ hover */
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* เพิ่มเงาเมื่อ hover */
+    }
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    color: #6eacda;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.status-badge {
+    background-color: #E6F0FF;
+    color: #003D7A;
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 12px;
+}
+
+    .status-badge.full {
+        background-color: #FF4D4F;
+        color: white;
+    }
+
+.card-tags {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.card-description {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.card-meta {
+    display: flex;
+    align-items: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 8px;
+    gap: 8px;
+}
+
+    .card-meta svg {
+        width: 16px;
+        height: 16px;
+        stroke: #666;
+    }
+
+    .card-meta:last-child {
+        margin-bottom: 0;
+    }
+
+.tag-post, .match-post {
+    display:none;
+}
