@@ -65,34 +65,39 @@ namespace WebProject.Controllers
             {
                 if (model.EndDate > DateTime.Now.AddDays(1))
                 {
-                    var user = await _userManager.GetUserAsync(User);
-                    if (user != null)
+                    if (model.ActivityDate < model.EndDate)
                     {
-                        Post post = new()
+                        var user = await _userManager.GetUserAsync(User);
+                        if (user != null)
                         {
-                            Title = model.Title,
-                            Description = model.Description,
-                            ParticipantAmount = model.ParticipantAmount,
-                            Years = model.Years,
-                            RequiredGenders = model.RequiredGenders,
-                            EndDate = model.EndDate,
-                            Location = model.Location,
-                            OwnerId = user.Id
-                        };
-                        _context.Posts.Add(post);
-                        foreach (var tagid in model.SelectedTagsId)
-                        {
-                            PostTag postTag = new()
+                            Post post = new()
                             {
-                                TagId = tagid,
-                                PostId = post.Id
+                                Title = model.Title,
+                                Description = model.Description,
+                                ParticipantAmount = model.ParticipantAmount,
+                                Years = model.Years,
+                                RequiredGenders = model.RequiredGenders,
+                                EndDate = model.EndDate,
+                                ActivityDate = model.ActivityDate,
+                                Location = model.Location,
+                                OwnerId = user.Id
                             };
-                            _context.PostTags.Add(postTag);
-                        }
-                        await _context.SaveChangesAsync();
+                            _context.Posts.Add(post);
+                            foreach (var tagid in model.SelectedTagsId)
+                            {
+                                PostTag postTag = new()
+                                {
+                                    TagId = tagid,
+                                    PostId = post.Id
+                                };
+                                _context.PostTags.Add(postTag);
+                            }
+                            await _context.SaveChangesAsync();
 
-                        return RedirectToAction("Index", new { id = post.Id });
+                            return RedirectToAction("Index", new { id = post.Id });
+                        }
                     }
+                    ModelState.AddModelError("ActivityDate", "วันเริ่มกิจกรรมต้องอยู่หลังจากวันปิดรับสมัคร");
 
                 }
                 ModelState.AddModelError("EndDate", "วันปิดรับสมัครต้องเป็นวันพรุ่งนี้ขึ้นไป");

@@ -33,8 +33,9 @@
                 | @Model.EndDate.ToString("dd MMMM yyyy")</p>
              </p>
             <ul class="detail">
-                <li class="participant-amount">จำนวนผู้เข้าร่วม @Model.ParticipantPosts.Count() คน</li>
-                <li>เหลือระยะเวลาการสมัครอีก 3 วัน</li>
+                <li class="participant-amount">จำนวนผู้เข้าร่วม @Model.ParticipantPosts.Count()/@Model.ParticipantAmount คน</li>
+                <li>เหลือระยะเวลาการสมัครอีก @((Model.EndDate - DateTime.Today).Days) วัน</li>
+                <li>วันเริ่มกิจกรรม @Model.ActivityDate.ToString("dd MMMM yyyy")</li>
             </ul>
             @* @if (Model.ParticipantPosts.Count < Model.ParticipantAmount) *@
             @* { *@

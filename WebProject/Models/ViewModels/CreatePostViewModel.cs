@@ -21,6 +21,8 @@ namespace WebProject.Models.ViewModels
         [Required]
         public DateTime EndDate { get; set; }
         [Required]
+        public DateTime ActivityDate { get; set; }
+        [Required]
         public string Location { get; set; }
 
     }

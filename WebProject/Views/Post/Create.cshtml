@@ -35,7 +35,7 @@
 			</div>
 			<div class="date-age-gender">
 				<div class="date-selector">
-					<p>วันและเวลาของกิจกรรม</p>
+					<p>วันปิดรับสมัคร</p>
 					<input id="date" type="datetime-local" asp-for="EndDate">
 					<span class="error" asp-validation-for="EndDate"></span>
 				</div>
@@ -84,8 +84,9 @@
 					<span asp-validation-for="ParticipantAmount" class="error"></span>
 				</div>
 				<div class="period">
-					<p>ระยะเวลารับสมัคร</p>
-					<input type="datetime-local">
+					<p>วันและเวลาของกิจกรรม</p>
+					<input type="datetime-local" asp-for="ActivityDate"/>
+					<span class="error" asp-validation-for="ActivityDate"></span>
 				</div>
 			</div>
 			<div class="location">
