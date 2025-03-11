@@ -41,12 +41,12 @@
     </div>
     <div class="account-nav">
         <a asp-controller="Account" asp-action="Profile"><p>โปรไฟล์</p></a>
-        <a asp-controller="Account" asp-action="Logout"><p>ออกจากระบบ</p></a>
         <a asp-controller="Account" asp-action="Activity"><p>กิจกรรมของคุณ</p></a>
+        <a asp-controller="Account" asp-action="Logout"><p>ออกจากระบบ</p></a>
     </div>
     <script src="~/js/RealtimeNotification.js" asp-append-version="true"></script>
 }
 else
 {
-	<a class="login-btn" asp-controller="Account" asp-action="Login">Login</a>
+	<a class="login-btn" asp-controller="Account" asp-action="Login">เข้าสู่ระบบ/สมัครสมาชิก</a>
 }

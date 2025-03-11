@@ -1,4 +1,8 @@
-﻿body {
+﻿* {
+    font-family: "IBM Plex Sans Thai";
+}
+
+body {
     background-color: #04346e;
 }
 
@@ -6,10 +10,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
+    width: 100%; /* เพิ่มความกว้างของ container */
+    margin: 0 auto; /* ให้ตำแหน่งกลาง */
 }
 
     .container h1 {
         color: #e2e2b6;
+        font-size: 48px;
     }
 
     .container p {
@@ -19,6 +27,8 @@
 
 form {
     padding: 10px;
+    width: 100%; /* เพิ่มความกว้างของ form */
+    margin: 0 auto;
 }
 
     form div {
@@ -34,7 +44,8 @@ form {
     }
 
 .text-title p {
-    font-size: 16px;
+    font-size: 14px;
+    color: #6eacda;
 }
 
 .text-title label {
@@ -44,7 +55,7 @@ form {
 
 .text-title input {
     height: 8vh;
-    font-size: xx-large;
+    font-size: 25px;
 }
 
 .content-box ul {

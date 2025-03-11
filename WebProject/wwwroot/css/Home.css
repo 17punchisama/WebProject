@@ -1,15 +1,27 @@
 ﻿
+* {
+    font-family: "IBM Plex Sans Thai";
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "IBM Plex Sans Thai";
+}
+
 body {
     background-color: #04346e;
-    text-align: center;
+    min-height: 100vh;
 }
 
     body h1 {
         color: #ffffe9;
-        margin: 30px 0;
-        margin-top: 0.5em;
-        font-size: 50px;
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 32px;
+        font-weight: bold;
     }
+ 
 
 .content-container {
     display: flex;
@@ -23,10 +35,10 @@ body {
 }
 
 .content {
-    background-color: #6eacda;
+    background-color: #ffffe9;
     max-width: 280px;
     text-align: start;
-    color: white;
+    color: #6eacda;
     padding: 0 10px;
     border-radius: 10px;
     margin: 10px 5vw 20px 5vw;

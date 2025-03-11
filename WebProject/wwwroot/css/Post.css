@@ -1,4 +1,8 @@
-﻿.container {
+﻿* {
+    font-family: "IBM Plex Sans Thai";
+}
+
+.container {
     position: relative;
     max-width: fit-content;
     margin: auto;
@@ -30,7 +34,7 @@ body {
 
 .content {
     background-color: #ffffe9;
-    border-radius: .5rem;
+    border-radius: 20px;
     max-width: 60vw;
     min-width: 60vw;
     position: relative;
@@ -104,44 +108,82 @@ body {
 }
 
 .participant {
+    padding: 10px;
+    margin: 5px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
     background-color: #ffffe9;
-    border-radius: .5rem;
-    display: none;
+
 }
 
     .participant h3 {
         color: #04346e;
     }
 
+    .participant li {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 5px;
+        list-style-type: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
 .comment-container {
     background-color: #ffffe9;
-    border-radius: .5rem;
+    border-radius: 20px;
     max-width: 60vw;
     position: relative;
-    padding: 5px 30px 10px 30px;
+    padding: 20px 40px;
     margin-bottom: 20px;
 }
 
 .comment {
-    padding: 5px;
+    padding: 10px;
     margin: 5px;
-    margin-bottom: 7px;
+    margin-bottom: 10px;
     border-radius: 5px;
-    box-shadow: 0 5px 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    background-color: #fdfdf0;
 }
 
-.comments {
-    margin-bottom: 30px;
-}
-
-form {
-    margin: auto;
-}
-
-    form input {
-        width: auto;
+    .comment:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
     }
 
+.comments {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between comments */
+}
+
+form input {
+    width: 96%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+}
+form button {
+    width: 100%;
+    padding: 10px 200px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    
 @media screen and (orientation: portrait) {
     .content ul {
         flex-wrap: wrap;
@@ -158,4 +200,14 @@ form {
             align-self: center;
             margin: 20px 0 0 0;
         }
+
+    form button {
+        padding: 10px 0; /* ลด padding ให้พอดีกับขนาดหน้าจอ */
+        font-size: 14px; /* ลดขนาดตัวอักษรให้พอดีกับหน้าจอ */
+    }
+
+    form input {
+        padding: 10px 0; /* ลด padding ให้พอดีกับขนาดหน้าจอ */
+        font-size: 14px; /* ลดขนาดตัวอักษรให้พอดีกับหน้าจอ */
+    }
 }

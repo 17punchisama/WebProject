@@ -39,6 +39,15 @@ namespace WebProject.Controllers
         }
 
         [HttpGet]
+        public IActionResult CreateGoods()
+        {
+            ViewData["Title"] = "Create Goods";
+            Console.WriteLine(ViewData["Title"]);  
+            return View();
+        }
+
+
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> Create()
         {
@@ -173,5 +182,6 @@ namespace WebProject.Controllers
             }
             return RedirectToAction("Index", new { id = PostId });
         }
+
     }
 }

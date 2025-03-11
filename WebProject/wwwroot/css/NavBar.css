@@ -93,14 +93,18 @@ a {
     }
 
 .login-btn {
-    background-color: #04346e;
-    border: solid 1px antiquewhite;
-    color: antiquewhite;
-    padding: 5px;
+    background-color: #032a5c;
+    border: none;
+    color: #ffffe9;
     font-size: 20px;
-    text-decoration: none;
+    border-radius: 20px;
+    padding: 12px;
     margin-right: 30px;
-    border-radius: 5px;
+}
+
+.login-btn:hover {
+    background: #ffffe9;
+    color: #032a5c;
 }
 
 .account-nav {
@@ -156,8 +160,44 @@ a {
     font-weight: normal;
 }
 
-@media only screen and (orientation: portrait) {
+.account-nav {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    background-color: #fdfdf0;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+    width: auto;
+}
 
+    .account-nav a {
+        display: block;
+        color: #333;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 12px 20px; /* Padding inside each item */
+        text-decoration: none; /* Remove underline */
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+        margin-bottom: 8px; /* Add spacing between items */
+    }
+
+        .account-nav a:hover {
+            background-color: #e6e6e6; /* Light gray on hover */
+            color: #0066cc; /* Change text color on hover */
+        }
+
+        .account-nav a:last-child {
+            margin-bottom: 0;
+        }
+
+
+
+
+
+@media only screen and (orientation: portrait) {
     .nav-bar img {
         width: 150px;
     }

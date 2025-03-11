@@ -1,16 +1,25 @@
-﻿@model WebProject.Models.User;
+﻿@model WebProject.Models.User
+
 @{
     ViewData["Title"] = "Profile Page";
     ViewData["Style"] = "Profile";
     ViewData["Script"] = "Profile";
 }
-<div class="body-conatiner">
+
+<div class="body-container">
     <div class="container">
+        <div class="profile-img">
+            <img id="profilePreview" src="@Model.ImgURL" alt="Profile Image" width="150">
+            <input type="file" id="profileInput" accept="image/*" hidden>
+            <button class="btn-edit" onclick="document.getElementById('profileInput').click()">เปลี่ยนโปรไฟล์</button>
+        </div>
         <div class="owner">
-            <img src="/images/1.png" alt="">
             <div class="small-box">
                 <h2>โปรไฟล์ของ @Model.Name</h2>
-                <button class="btn-edit">เปลี่ยนโปรไฟล์</button>
+            </div>
+            <div class="btn-box">
+                <button onclick="openPopup()">แก้ไขข้อมูลส่วนตัว</button>
+                <button onclick="openEditPassPopup()">แก้ไขรหัสผ่าน</button>
             </div>
         </div>
         <div class="content">
@@ -19,19 +28,15 @@
                 <li>
                     <div class="info">
                         <div class="info-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="15" height="15">
-                                <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
-                            </svg>
+                            <!-- Icon for phone -->
                         </div>
-                        <span id="phone">@Model.Name</span>
+                        <span id="phone">@Model.PhoneNumber</span>
                     </div>
                 </li>
                 <li>
                     <div class="info">
                         <div class="info-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="15" height="15">
-                                <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-                            </svg>
+                            <!-- Icon for email -->
                         </div>
                         <span id="email">@Model.Email</span>
                     </div>
@@ -39,24 +44,34 @@
                 <li>
                     <div class="info">
                         <div class="info-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="15" height="15">
-                                <path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z" />
-                            </svg>
+                            <!-- Icon for gender -->
                         </div>
-                        <span id="year">blank</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="info">
-                        <div class="info-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="15" height="15">
-                                <path d="M176 288a112 112 0 1 0 0-224 112 112 0 1 0 0 224zM352 176c0 86.3-62.1 158.1-144 173.1l0 34.9 32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32 0 0 32c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-32-32 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0 0-34.9C62.1 334.1 0 262.3 0 176C0 78.8 78.8 0 176 0s176 78.8 176 176zM271.9 360.6c19.3-10.1 36.9-23.1 52.1-38.4c20 18.5 46.7 29.8 76.1 29.8c61.9 0 112-50.1 112-112s-50.1-112-112-112c-7.2 0-14.3 .7-21.1 2c-4.9-21.5-13-41.7-24-60.2C369.3 66 384.4 64 400 64c37 0 71.4 11.4 99.8 31l20.6-20.6L487 41c-6.9-6.9-8.9-17.2-5.2-26.2S494.3 0 504 0L616 0c13.3 0 24 10.7 24 24l0 112c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-33.4-33.4L545 140.2c19.5 28.4 31 62.7 31 99.8c0 97.2-78.8 176-176 176c-50.5 0-96-21.3-128.1-55.4z" />
-                            </svg>
-                        </div>
-                        <span id="address">@Model.Gender</span>
+                        <span id="gender">@Model.Gender</span>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
 </div>
+
+
+<div id="popup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h2>แก้ไขข้อมูลส่วนตัว</h2>
+
+        <form method="post" asp-action="EditProfile" asp-controller="Account">
+            <label asp-for="Name" for="Name">ชื่อที่แสดง</label>
+            <input type="text" id="name" name="Name" value="@Model.Name" required>
+
+            <label asp-for="Email" for="Email">อีเมล</label>
+            <input type="email" id="Email" name="Email" value="@Model.Email" required>
+
+            <label asp-for="PhoneNumber" for="PhoneNumber">เบอร์โทรศัพท์</label>
+            <input type="tel" id="PhoneNumber" name="PhoneNumber" value="@Model.PhoneNumber" required>
+
+            <button type="submit" class="btn-edit">บันทึกข้อมูล</button>
+        </form>
+    </div>
+</div>
+
