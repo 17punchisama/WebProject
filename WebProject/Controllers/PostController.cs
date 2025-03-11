@@ -65,7 +65,7 @@ namespace WebProject.Controllers
             {
                 if (model.EndDate > DateTime.Now.AddDays(1))
                 {
-                    if (model.ActivityDate < model.EndDate)
+                    if (model.ActivityDate > model.EndDate)
                     {
                         var user = await _userManager.GetUserAsync(User);
                         if (user != null)
@@ -100,7 +100,10 @@ namespace WebProject.Controllers
                     ModelState.AddModelError("ActivityDate", "วันเริ่มกิจกรรมต้องอยู่หลังจากวันปิดรับสมัคร");
 
                 }
-                ModelState.AddModelError("EndDate", "วันปิดรับสมัครต้องเป็นวันพรุ่งนี้ขึ้นไป");
+                else
+                {
+                    ModelState.AddModelError("EndDate", "วันปิดรับสมัครต้องเป็นวันพรุ่งนี้ขึ้นไป");
+                }
 
             }
             model.Tags = await _context.Tags.ToListAsync();
