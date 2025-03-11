@@ -12,16 +12,10 @@
     @* <link rel="stylesheet" href="~/WebProject.styles.css" asp-append-version="true" /> *@
 </head>
 <body>
-    <header>
-        <nav class="nav-bar">
-            <a asp-controller="Home" asp-action="Index"><img src="/images/logo_peonpromt.png" alt="Logo"></a>
-            <partial name="_LoginPartial.cshtml" />
-        </nav>
-    </header>
-    <div id="create-box"></div>
+    <partial name="_LoginPartial.cshtml" />
+    
     @RenderBody()
     <script src="@Url.Content("~/js/" + ViewData["Script"] + ".js")" asp-append-version="true"></script>
-    <script src="~/js/NavBar.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

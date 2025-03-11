@@ -36,23 +36,28 @@
                 <li class="participant-amount">จำนวนผู้เข้าร่วม @Model.ParticipantPosts.Count() คน</li>
                 <li>เหลือระยะเวลาการสมัครอีก 3 วัน</li>
             </ul>
-            @if (Model.ParticipantPosts.Count < Model.ParticipantAmount)
-            {
-                if (signInManager.IsSignedIn(User)){
-                    var user = await userManager.GetUserAsync(User);
-                    if (user != null && Model.ParticipantPosts.Any(pp => pp.UserId == user.Id)){
-                        <a class="cancle" asp-controller="Post" asp-action="Cancle" asp-route-postid="@Model.Id">ยกเลิกการเข้าร่วม</a>
+            @* @if (Model.ParticipantPosts.Count < Model.ParticipantAmount) *@
+            @* { *@
+            @if (signInManager.IsSignedIn(User)){
+                var user = await userManager.GetUserAsync(User);
+                if (user != null && Model.ParticipantPosts.Any(pp => pp.UserId == user.Id)){
+                    <a class="cancle" asp-controller="Post" asp-action="Cancle" asp-route-postid="@Model.Id">ยกเลิกการเข้าร่วม</a>
+                }else{
+                    if (user != null && user.Id == Model.OwnerId){
+                        <a class="close" asp-controller="Post" asp-action="Close" asp-route-postid="@Model.Id">ปิดกิจกรรม</a>
                     }else{
-                        if (user != null && user.Id == Model.OwnerId){
-                            <a class="close" asp-controller="Post" asp-action="Close" asp-route-postid="@Model.Id">ปิดกิจกรรม</a>
-                        }else{
+                        if (Model.ParticipantPosts.Count < Model.ParticipantAmount){
                             <a class="join" asp-controller="Post" asp-action="Join" asp-route-postid="@Model.Id">+ เข้าร่วมกิจกรรม</a>
+                        }else{
+                            <a class="full">เต็ม</a>
                         }
+                        
                     }
                 }
-            }else{
-                <a class="full">เต็ม</a>
             }
+            @* }else{ *@
+            @*     <a class="full">เต็ม</a> *@
+            @* } *@
         </div>
     </div>
     @if (Model.ParticipantPosts?.Any() == true)

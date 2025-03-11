@@ -6,7 +6,7 @@
 
     penIcon.onclick = function () {
         console.log("Pen icon clicked");
-
+        closeSearchBox()
         if (createBox.style.display === 'block') {
             createBox.style.display = 'none';
         } else {
@@ -57,4 +57,42 @@
             notiCon.style.display = 'block';
         }
     };
+    // ฟังก์ชันสำหรับปิดกล่องค้นหา
+    function closeSearchBox() {
+        searchBox.style.display = 'none';
+    }
+
+    // ฟังก์ชันสำหรับปิดกล่องสร้างกิจกรรม
+    function closeCreateBox() {
+        createBox.style.display = 'none';
+    }
+    const searchIcon = document.getElementById('search-icon');
+    const searchBox = document.querySelector("#search-box");
+    searchBox.id = 'search-box';
+    searchIcon.onclick = function () {
+        closeCreateBox(); // ปิดกล่องสร้างกิจกรรมก่อน
+        if (searchBox.style.display === 'block') {
+            searchBox.style.display = 'none';
+        } else {
+            searchBox.style.display = 'block';
+        }
+    };
+    document.addEventListener('keydown', function (e) {
+        const searchInput = document.getElementById('search-input');
+        if (e.key === 'Enter' && searchInput && searchBox.style.display === 'block') {
+            const query = searchInput.value.trim();
+            if (query) {
+                // เปลี่ยน URL ไปยังหน้าผลลัพธ์การค้นหาพร้อม query
+                window.location.href = `/Home/Search?input=${encodeURIComponent(query)}`;
+            }
+        }
+    });
+
+    const listItems = document.querySelectorAll("#search-box ul li");
+    const search_input = document.querySelector("#search-box input");
+    listItems.forEach(li => {
+        li.addEventListener('click', function () {
+            search_input.value = li.textContent;
+        });
+    });
 });

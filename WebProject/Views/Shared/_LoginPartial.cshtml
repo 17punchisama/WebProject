@@ -8,45 +8,71 @@
 
 @if (signInManager.IsSignedIn(User))
 {
-    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-    var currentUser = await MyDbContext.Users
-        .Include(u => u.Notifications.Where(n => n.Isread))  // ✅ Load only read notifications
-        .FirstOrDefaultAsync(u => u.Id == userId);
-    <ul>
-		<li><i class="fa-solid fa-bell"><div class="red-dot"></div></i></li>
-        <li><i class="fa-solid fa-pen"></i></li>
-        <li><i class="fa-solid fa-magnifying-glass"></i></li>
-        <li><i class="fa-solid fa-user"></i></li>
-    </ul>
-    <div class="noti-container">
-        <div class="notread"></div>
-        <div class="read">
-            @foreach (var noti in currentUser.Notifications){
-                if (noti.Type){
-                    <a asp-controller="Notification" asp-action="Index" asp-route-id="@noti.Id">
-                        <div class="noti">
-                            <h5>คุณได้เข้าร่วม</h5>
-                            <p>@noti.PostName</p>
-                        </div>
-                    </a>
-                }
-                else{
-                    <div class="noti">
-                        <h5>กิจกรรมถูกยกเลิก</h5>
-                        <p>@noti.PostName</p>
-                    </div>
-                }
+    <header>
+        <nav class="nav-bar">
+            <a asp-controller="Home" asp-action="Index"><img src="/images/logo_peonpromt.png" alt="Logo"></a>
+            @{
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var currentUser = await MyDbContext.Users
+                .Include(u => u.Notifications.Where(n => n.Isread))  // ✅ Load only read notifications
+                .FirstOrDefaultAsync(u => u.Id == userId);
             }
-        </div>
-    </div>
-    <div class="account-nav">
-        <a asp-controller="Account" asp-action="Profile"><p>โปรไฟล์</p></a>
-        <a asp-controller="Account" asp-action="Logout"><p>ออกจากระบบ</p></a>
-        <a asp-controller="Account" asp-action="Activity"><p>กิจกรรมของคุณ</p></a>
+            <ul>
+                <li>
+                    <i class="fa-solid fa-bell"></i>
+                    <div class="red-dot"></div>
+                </li>
+                <li><i class="fa-solid fa-pen"></i></li>
+                <li id="search-icon"><i class="fa-solid fa-magnifying-glass"></i></li>
+                <li><i class="fa-solid fa-user"></i></li>
+            </ul>
+            <div class="noti-container">
+                <div class="notread"></div>
+                <div class="read">
+                    @foreach (var noti in currentUser.Notifications){
+                        if (noti.Type){
+                            <a asp-controller="Notification" asp-action="Index" asp-route-id="@noti.Id">
+                                <div class="noti">
+                                    <h5>คุณได้เข้าร่วม</h5>
+                                    <p>@noti.PostName</p>
+                                </div>
+                            </a>
+                        }
+                        else{
+                            <div class="noti">
+                                <h5>กิจกรรมถูกยกเลิก</h5>
+                                <p>@noti.PostName</p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="account-nav">
+                <a asp-controller="Account" asp-action="Profile"><p>โปรไฟล์</p></a>
+                <a asp-controller="Account" asp-action="Logout"><p>ออกจากระบบ</p></a>
+                <a asp-controller="Account" asp-action="Activity"><p>กิจกรรมของคุณ</p></a>
+            </div>
+        </nav>
+    </header>
+    <div id="create-box"></div>
+    <div id="search-box">
+        <input type="text" id="search-input" placeholder="ค้นหา...">
+        <ul>
+            <li>ดูหนังดี</li>
+            <li>หาหนังดูหนัง</li>
+            <li>ดูหนังกับเพื่อน</li>
+            <li>ค้นหาหนังใหม่</li>
+        </ul>
     </div>
     <script src="~/js/RealtimeNotification.js" asp-append-version="true"></script>
+    <script src="~/js/LoginPartial.js" asp-append-version="true"></script>
 }
 else
 {
-	<a class="login-btn" asp-controller="Account" asp-action="Login">Login</a>
+    <header>
+        <nav class="nav-bar">
+            <a asp-controller="Home" asp-action="Index"><img src="/images/logo_peonpromt.png" alt="Logo"></a>
+            <a class="login-btn" asp-controller="Account" asp-action="Login">Login</a>
+        </nav>
+    </header>
 }

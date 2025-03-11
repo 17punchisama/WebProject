@@ -1,12 +1,12 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     // Clear search button functionality
-    const searchInput = document.querySelector('.search-bar');
-    const clearButton = document.querySelector('.clear-search');
+    //const searchInput = document.querySelector('.search-bar');
+    //const clearButton = document.querySelector('.clear-search');
 
-    clearButton.addEventListener('click', function () {
-        searchInput.value = '';
-        searchInput.focus();
-    });
+    //clearButton.addEventListener('click', function () {
+    //    searchInput.value = '';
+    //    searchInput.focus();
+    //});
 
     // Tab navigation functionality
     const tabs = document.querySelectorAll('.nav-tab');

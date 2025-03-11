@@ -1,7 +1,6 @@
 ﻿
 body {
     background-color: #04346e;
-    text-align: center;
 }
 
     body h1 {
@@ -9,6 +8,9 @@ body {
         margin: 30px 0;
         margin-top: 0.5em;
         font-size: 50px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
     }
 
 .content-container {
@@ -70,7 +72,9 @@ body {
     }
 
     body h1 {
-        margin: 10px 0;
+        margin-top: 10px;
         font-size: 35px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
