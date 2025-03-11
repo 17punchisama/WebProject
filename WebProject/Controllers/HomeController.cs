@@ -21,6 +21,8 @@ namespace WebProject.Controllers
         {
             List<Post> posts = await _context.Posts
                                 .Where(p => !p.IsClosed)
+                                .Include(p => p.PostTags)
+                                    .ThenInclude(pp => pp.Tag)
                                 .Include(p => p.Owner)
                                 .ToListAsync();
             return View(posts);
