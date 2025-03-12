@@ -49,20 +49,15 @@
             </div>
             <div class="account-nav">
                 <a asp-controller="Account" asp-action="Profile"><p>โปรไฟล์</p></a>
-                <a asp-controller="Account" asp-action="Logout"><p>ออกจากระบบ</p></a>
                 <a asp-controller="Account" asp-action="Activity"><p>กิจกรรมของคุณ</p></a>
+                <a asp-controller="Account" asp-action="Logout"><p>ออกจากระบบ</p></a>
             </div>
         </nav>
     </header>
     <div id="create-box"></div>
     <div id="search-box">
         <input type="text" id="search-input" placeholder="ค้นหา...">
-        <ul>
-            <li>ดูหนังดี</li>
-            <li>หาหนังดูหนัง</li>
-            <li>ดูหนังกับเพื่อน</li>
-            <li>ค้นหาหนังใหม่</li>
-        </ul>
+        
     </div>
     <script src="~/js/RealtimeNotification.js" asp-append-version="true"></script>
     <script src="~/js/LoginPartial.js" asp-append-version="true"></script>

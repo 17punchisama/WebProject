@@ -1,4 +1,5 @@
-﻿using WebProject.Data;
+﻿using System.Runtime.CompilerServices;
+using WebProject.Data;
 using WebProject.Models;
 
 namespace WebProject.Services
@@ -13,7 +14,8 @@ namespace WebProject.Services
         }
 
         public async Task ClosePostsAsync(Post post)
-        {
+        {   
+            post.IsClosed = true;
             await _context.Entry(post).Collection(p => p.ParticipantPosts).LoadAsync();
             foreach (var pp in post.ParticipantPosts)
             {
@@ -23,6 +25,7 @@ namespace WebProject.Services
                     PostName = post.Title,
                     PostId = post.Id,
                     UserId = pp.UserId
+               
                 };
                 _context.Notifications.Add(notification);
             }

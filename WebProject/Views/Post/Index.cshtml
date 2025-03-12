@@ -11,8 +11,10 @@
 }
 <div class="container">
     <div class="owner">
-        <div class="profile"></div>
-        <h2>กิจกรรมของ<a asp-controller="Account" asp-action="Profile" asp-route-id="@Model.Owner.Id">@Model.Owner.Name</a></h2>
+        <div class="profile">
+            <img src="@Model.Owner.ImgURL" />
+        </div>
+        <h2>กิจกรรมของ <a asp-controller="Account" asp-action="Profile" asp-route-id="@Model.Owner.Id">@Model.Owner.Name</a></h2>
     </div>
     <div class="content-container">
         <div class="content">
@@ -28,7 +30,7 @@
                 @string.Join(",", Model.RequiredGenders.Select(g =>
                          g == Gender.Male ? "ชาย" :
                          g == Gender.Female ? "หญิง" :
-                         g == Gender.LGTV ? "อื่นๆ" : ""))
+                         g == Gender.LGBTQ ? "อื่นๆ" : ""))
                 | ชั้นปี : @string.Join(",", Model.Years)
                 | @Model.EndDate.ToString("dd MMMM yyyy")</p>
              </p>
@@ -39,7 +41,7 @@
             </ul>
             @* @if (Model.ParticipantPosts.Count < Model.ParticipantAmount) *@
             @* { *@
-            @if (signInManager.IsSignedIn(User)){
+            @if (signInManager.IsSignedIn(User) && !Model.IsClosed){
                 var user = await userManager.GetUserAsync(User);
                 if (user != null && Model.ParticipantPosts.Any(pp => pp.UserId == user.Id)){
                     <a class="cancle" asp-controller="Post" asp-action="Cancle" asp-route-postid="@Model.Id">ยกเลิกการเข้าร่วม</a>
@@ -64,11 +66,13 @@
     @if (Model.ParticipantPosts?.Any() == true)
     {
         <div class="participant">
-            <h3>ผู้เข้าร่วม</h3>
+            <h2>ผู้เข้าร่วม</h2>
             <ol>
                 @foreach (var pp in Model.ParticipantPosts)
                 {
-                    <li>@pp.User.Name</li>
+                    <img src="@pp.User.ImgURL" />
+
+                    <li><a asp-controller="Account" asp-action="Profile" asp-route-id="@pp.User.Id"> @pp.User.Name</a></li>
                 }
             </ol>
         </div>
@@ -78,7 +82,8 @@
         <div class="comments">
            @foreach (var comment in Model.Comments){
                 <div class="comment">
-                    <h4>@comment.User.Name</h4>
+                    <img src="@comment.User.ImgURL" alt="Image Profile" />
+                    <h4>@comment.User.Name :</h4>
                     <p>@comment.Description</p>
                 </div>
            }
@@ -90,3 +95,4 @@
         </form>
     </div>
 </div>
+

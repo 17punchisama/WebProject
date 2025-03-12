@@ -49,10 +49,10 @@ namespace WebProject.Services
                     //dbContext.Posts.RemoveRange(expiredPosts);
                     //await dbContext.SaveChangesAsync();
 
-                    //foreach (var post in expiredPosts)
-                    //{
-                    //    await postService.ClosePostsAsync(post);
-                    //}
+                    foreach (var post in expiredPosts)
+                    {
+                        await postService.ClosePostsAsync(post);
+                    }
                     Console.WriteLine($"{expiredPosts.Count} expired posts deleted.");
                 }
             }

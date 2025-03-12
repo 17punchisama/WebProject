@@ -3,48 +3,48 @@
     const preview = document.getElementById('profilePreview');
 
     input.addEventListener('change', function () {
-        const file = this.files[0];
+        const file = this.files[0]; // Get the selected file
         if (file) {
+            // Display the image preview
             const reader = new FileReader();
             reader.onload = function (e) {
-                const base64String = e.target.result.split(',')[1]; // Get the Base64 part
-                preview.src = e.target.result; // Show image preview
-
-                // Send Base64 to the server
-                const formData = new FormData();
-                formData.append('ProfileImageBase64', base64String);
-
-                fetch('/Account/EditImgProfile', {
-                    method: 'POST',
-                    body: formData,
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log('ไฟล์อัปโหลดสำเร็จ');
-                        } else {
-                            console.error('การอัปโหลดไฟล์ล้มเหลว');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('เกิดข้อผิดพลาด:', error);
-                    });
+                preview.src = e.target.result; // Display the image preview
             };
-            reader.readAsDataURL(file); // Read file as Data URL (Base64)
+            reader.readAsDataURL(file); // Read file as Data URL to preview
+
+            // Send file using FormData without converting it to base64
+            const formData = new FormData();
+            formData.append('ProfileImage', file); // Append the file to FormData
+
+            // Send the file to the server
+            fetch('/Account/EditImgProfile', {
+                method: 'POST',
+                body: formData, // Send formData containing the file
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('File uploaded successfully');
+                    } else {
+                        console.error('File upload failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error occurred:', error);
+                });
         }
     });
 });
 
-
-
+// Functions for handling popups (for password change or other actions)
 function openPopup() {
-    document.getElementById("popup").style.display = "block";
+    document.getElementById("popup").style.display = "block"; // Show popup
 }
 
 function closePopup() {
-    document.getElementById("popup").style.display = "none";
+    document.getElementById("popup").style.display = "none"; // Hide popup
 }
 
 function openEditPassPopup() {
-    document.getElementById("edit-pass-pop").style.display = "block";
+    document.getElementById("edit-pass-pop").style.display = "block"; // Show edit password popup
 }

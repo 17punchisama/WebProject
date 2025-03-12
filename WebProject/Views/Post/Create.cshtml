@@ -36,7 +36,7 @@
 			<div class="date-age-gender">
 				<div class="date-selector">
 					<p>วันปิดรับสมัคร</p>
-					<input id="date" type="datetime-local" asp-for="EndDate">
+					<input id="date" type="datetime-local" asp-for="EndDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
 					<span class="error" asp-validation-for="EndDate"></span>
 				</div>
 				<div class="year">
@@ -70,7 +70,7 @@
 							<label for="Female">หญิง</label>
 						</li>
 						<li>
-							<input type="checkbox" value="2" name="RequiredGenders" id="LGTV" @isCheck(Gender.LGTV)>
+							<input type="checkbox" value="2" name="RequiredGenders" id="LGTV" @isCheck(Gender.LGBTQ)>
 							<label for="LGTV">อิ่นๆ</label>
 						</li>
 					</ul>
@@ -85,7 +85,7 @@
 				</div>
 				<div class="period">
 					<p>วันและเวลาของกิจกรรม</p>
-					<input type="datetime-local" asp-for="ActivityDate"/>
+					<input type="datetime-local" asp-for="ActivityDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"/>
 					<span class="error" asp-validation-for="ActivityDate"></span>
 				</div>
 			</div>
