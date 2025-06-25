@@ -281,4 +281,26 @@ form button {
         padding: 10px 0; /* ลด padding ให้พอดีกับขนาดหน้าจอ */
         font-size: 14px; /* ลดขนาดตัวอักษรให้พอดีกับหน้าจอ */
     }
+    .comment-container{
+        margin: auto;
+    }
+    .content {
+        margin: auto;
+        margin-bottom: 15px;
+    }
+/*    .owner{
+        justify-content: center;
+    }*/
+
+    .content ul li{
+        font-size: 15px;
+    }
+
+    .owner h2, .owner h2 a{
+        font-size: 25px;
+    }
+
+    .content h1{
+        font-size: 30px;
+    }
 }

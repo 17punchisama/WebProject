@@ -249,10 +249,6 @@ a {
         height: 20px;
     }
 
-/*    body h1 {
-        margin: 10px 0;
-    }*/
-
     #create-box{
         width: 240px;
         height: 134px;
@@ -269,5 +265,14 @@ a {
     #create-box button{
         font-size: 10px;
         margin: 0;
+    }
+
+    .account-nav{
+        right: 0;
+    }
+    .noti-container{
+        width: 150px;
+        right: 170px;
+        height: 100px;
     }
 }

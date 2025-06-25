@@ -191,3 +191,40 @@ body {
     color: #04346e;
     cursor: pointer;
 }
+
+@media only screen and (orientation: portrait){
+    .activity-item div {
+        font-size: 14px;
+    }
+    .activity-item p {
+        flex-grow: 1;
+        font-size: 18px;
+    }
+
+    h2 {
+        font-size: 19px;
+    }
+
+    .owner h2 {
+        font-size: 25px;
+    }
+    .container {
+        margin-top: 15px;
+        padding: 20px;
+    }
+
+    .owner {
+        margin-bottom: 20px;
+    }
+
+    .content-container{
+        margin-top: 20px;
+    }
+    .content-container h2{
+        margin-top: 15px;
+    }
+    .container{
+        margin-top: 15px;
+        padding-top: 0;
+    }
+}
