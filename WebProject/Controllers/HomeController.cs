@@ -21,6 +21,7 @@ namespace WebProject.Controllers
         {
             List<Post> posts = await _context.Posts
                                 .Where(p => !p.IsClosed)
+                                .Include(p => p.ParticipantPosts)
                                 .Include(p => p.PostTags)
                                     .ThenInclude(pp => pp.Tag)
                                 .Include(p => p.Owner)
@@ -35,9 +36,9 @@ namespace WebProject.Controllers
                     .ThenInclude(pt => pt.Post) // Include related Post
                     .ThenInclude(p => p.Owner) // Include related Owner in Post
                  .Select(t => new
-                {
-                    TagPosts = t.PostTags.Select(pt => pt.Post).ToList(), // Navigate through PostTag
-                })
+                 {
+                     TagPosts = t.PostTags.Select(pt => pt.Post).ToList(), // Navigate through PostTag
+                 })
                 .FirstOrDefaultAsync();
 
             if (result != null)
@@ -60,7 +61,7 @@ namespace WebProject.Controllers
                             .Reference(p => p.Tag)
                             .LoadAsync();
                         }
-                    } 
+                    }
                 }
             }
 
@@ -69,7 +70,7 @@ namespace WebProject.Controllers
                 .Where(p => p.Title.Contains(input))
                 .Include(p => p.Owner)
                 .Include(p => p.ParticipantPosts)
-                .Include (p => p.PostTags)
+                .Include(p => p.PostTags)
                     .ThenInclude(pp => pp.Tag)
                 .ToListAsync();
 
@@ -87,5 +88,27 @@ namespace WebProject.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateTag(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                ModelState.AddModelError(string.Empty, "Tag name is required.");
+                return View(); // You can also return to a specific view if needed
+            }
+
+            var tag = new Tag
+            {
+                Name = name
+            };
+
+            _context.Tags.Add(tag); // Add the tag to the DbContext
+            await _context.SaveChangesAsync(); // Save changes to the database
+
+            return RedirectToAction("Index", "Home"); // Redirect to home page after successful save
+        }
+
     }
 }

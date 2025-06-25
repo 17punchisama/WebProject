@@ -51,11 +51,11 @@ namespace WebProject.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        ModelState.AddModelError(string.Empty, "รหัสผ่านผิด");
                         return View(model);
                     }
                 }
-                ModelState.AddModelError(string.Empty, "User not found.");
+                ModelState.AddModelError(string.Empty, "ไม่พบชื่อผู้ใช้");
                 return View(model);
             }
             return View(model);
@@ -231,10 +231,41 @@ namespace WebProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditImgProfile(string ProfileImageBase64)
+        public async Task<IActionResult> EditImgProfile(IFormFile ProfileImage)
         {
-            return Content("EditImgProfile");
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null && ProfileImage != null)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ProfileImage.FileName);
+
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ProfileImage.CopyToAsync(fileStream);
+                }
+
+                user.ImgURL = "/images/" + fileName;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Profile"); 
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+
+            return Content("Error updating image.");
         }
+
 
 
 

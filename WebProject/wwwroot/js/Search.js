@@ -10,7 +10,8 @@
 
     // Tab navigation functionality
     const tabs = document.querySelectorAll('.nav-tab');
-
+    const clearButton = document.querySelector('.clear-search');
+    const searchIcon = document.querySelector('.search-icon');
     tabs.forEach(tab => {
         tab.addEventListener('click', function () {
             tabs.forEach(t => t.classList.remove('active'));
@@ -43,5 +44,20 @@
         match_posts.style.display = 'none';
         tag_posts.style.display = 'grid';
     });
+
+    clearButton.addEventListener('click', function () {
+        searchInput.value = ''; 
+        searchInput.focus();    
+    });
+
+    searchIcon.addEventListener('click', function () {
+        if (searchInput.style.display === 'none' || searchInput.style.display === '') {
+            searchInput.style.display = 'block';  
+            searchInput.focus();                  
+        } else {
+            searchInput.style.display = 'none';   
+        }
+    });
+
     
 });

@@ -103,7 +103,7 @@ namespace WebProject.Controllers
                 else
                 {
                     ModelState.AddModelError("EndDate", "วันปิดรับสมัครต้องเป็นวันพรุ่งนี้ขึ้นไป");
-                }
+                }   
 
             }
             model.Tags = await _context.Tags.ToListAsync();

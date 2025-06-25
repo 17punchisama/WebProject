@@ -4,58 +4,69 @@
 
 body {
     background-color: #04346e;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     height: 100vh;
-    width: 100%; /* เพิ่มความกว้างของ container */
-    margin: 0 auto; /* ให้ตำแหน่งกลาง */
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
     .container h1 {
         color: #e2e2b6;
-        font-size: 48px;
+        font-size: 4vw; /* Adjusted to be relative to screen size */
+        text-align: center;
+        width: 100%;
     }
 
     .container p {
         color: #e2e2b6;
-        font-size: 26px;
+        font-size: 2vw; /* Adjusted to be relative to screen size */
     }
 
 form {
     padding: 10px;
-    width: 100%; /* เพิ่มความกว้างของ form */
+    width: 100%; /* Make form responsive */
+    max-width: 800px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
     form div {
-        position: relative;
+        width: 100%;
     }
 
     form input {
         width: 100%;
         border-radius: .5rem;
         background-color: #ffffe9;
-        font-size: 18px;
+        font-size: 1.5vw; /* Adjusted font size */
         height: 5vh;
     }
 
 .text-title p {
-    font-size: 14px;
+    font-size: 1vw;
     color: #6eacda;
 }
 
 .text-title label {
     top: 40px;
-    font-size: 30px;
+    font-size: 2vw; /* Adjusted font size */
 }
 
 .text-title input {
     height: 8vh;
-    font-size: 25px;
+    font-size: 2.5vw; /* Adjusted font size */
+    box-sizing: border-box;
 }
 
 .content-box ul {
@@ -67,14 +78,14 @@ form {
 .tag-container {
     display: flex;
     flex-wrap: wrap;
-    background-color: white;
+    background-color: #ffffe9;
     height: 60px;
     padding: 10px 5px;
     border-radius: 5px;
-    overflow: scroll;
+    overflow: auto;
 }
 
-    .tag-container input[type = "checkbox"] {
+    .tag-container input[type="checkbox"] {
         appearance: none;
         position: absolute;
         width: auto;
@@ -82,31 +93,30 @@ form {
     }
 
     .tag-container label p {
-        font-size: 15px;
+        font-size: 1.5vw;
         color: black;
     }
 
     .tag-container label {
         position: relative;
-        font-size: 15px;
+        font-size: 1.5vw; /* Adjusted font size */
         height: fit-content;
-        /* background-color: #e2e2b3; */
         border: 1px solid white;
         border-radius: 10px;
-        margin: 5px 5px;
+        margin: 5px;
         padding: 2px;
         text-align: start;
-        box-shadow: 5px 5px 15px rgba(0, 0, 0,0.25);
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
         transition: border 1s;
     }
 
-    .tag-container input[type = "checkbox"]:checked + label {
+    .tag-container input[type="checkbox"]:checked + label {
         border: 1px solid #04346e;
     }
 
 .checkbox li {
     position: relative;
-    width: 75px;
+    width: 20%; /* Adjusted to be responsive */
     height: 50px;
     text-align: center;
     margin: 0 10px 10px 10px;
@@ -125,7 +135,7 @@ form {
 .text-description textarea {
     width: 100%;
     height: 15vh;
-    font-size: medium;
+    font-size: 1.5vw;
     resize: none;
     border-radius: .5rem;
     background-color: #ffffe9;
@@ -135,7 +145,7 @@ form {
     top: 50px;
 }
 
-.checkbox input[type = "checkbox"]:checked {
+.checkbox input[type="checkbox"]:checked {
     border: 3px solid #6eacda;
     background-color: #e2e2b3;
 }
@@ -155,7 +165,8 @@ form {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 80%;
+    width: 100%;
+    gap: 20px;
 }
 
 .people {
@@ -172,35 +183,70 @@ form {
     }
 
 .period {
-    width: 40%;
+    width: 50%;
 }
 
 .location {
-    width: 80%;
+    width: 100%;
 }
 
 form button {
     width: 100%;
-    margin-top: 10lvh;
+    margin-top: 10vh;
     height: 7vh;
     border-radius: .5rem;
-    font-size: 33px;
+    font-size: 2vw; /* Adjusted font size */
     background-color: #6eacda;
 }
 
-input[type=number] {
+input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
 
-    input[type=number]::-webkit-outer-spin-button,
-    input[type=number]::-webkit-inner-spin-button {
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
+
 .error {
     display: block;
     padding-right: 10px;
-    margin-top:5px;
+    margin-top: 5px;
     color: red;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        width: 85%;
+    }
+
+        .container h1 {
+            font-size: 5vw;
+        }
+
+        .container p {
+            font-size: 3vw;
+        }
+
+    form input, .text-title input, .text-description textarea {
+        font-size: 3vw;
+        height: 6vh;
+    }
+
+    form button {
+        font-size: 5vw;
+        width: 100%;
+    }
+
+    .people, .period, .location {
+        width: 50%;
+    }
+
+    .checkbox li {
+        width: 10%; /* Adjusted for small screens */
+    }
 }

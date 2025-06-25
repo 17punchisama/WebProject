@@ -24,7 +24,7 @@ namespace WebProject.Models.ViewModels
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required, DataType(DataType.Password), Compare("Password")]
+        [Required, DataType(DataType.Password), Compare("Password", ErrorMessage = "รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน")]
         public string ConfirmPassword { get; set; }
     }
 }
