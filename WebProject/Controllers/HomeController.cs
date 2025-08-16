@@ -21,11 +21,63 @@ namespace WebProject.Controllers
         {
             List<Post> posts = await _context.Posts
                                 .Where(p => !p.IsClosed)
+                                .Include(p => p.ParticipantPosts)
+                                .Include(p => p.PostTags)
+                                    .ThenInclude(pp => pp.Tag)
                                 .Include(p => p.Owner)
                                 .ToListAsync();
             return View(posts);
         }
+        public async Task<IActionResult> Search(string input)
+        {
+            var result = await _context.Tags
+                .Where(t => t.Name == input)
+                .Include(t => t.PostTags)
+                    .ThenInclude(pt => pt.Post) // Include related Post
+                    .ThenInclude(p => p.Owner) // Include related Owner in Post
+                 .Select(t => new
+                 {
+                     TagPosts = t.PostTags.Select(pt => pt.Post).ToList(), // Navigate through PostTag
+                 })
+                .FirstOrDefaultAsync();
 
+            if (result != null)
+            {
+                foreach (var post in result.TagPosts)
+                {
+                    if (post != null)
+                    {
+                        await _context.Entry(post)
+                        .Collection(p => p.ParticipantPosts)
+                        .LoadAsync();
+
+                        await _context.Entry(post)
+                        .Collection(p => p.PostTags)
+                        .LoadAsync();
+
+                        foreach (var pt in post.PostTags)
+                        {
+                            await _context.Entry(pt)
+                            .Reference(p => p.Tag)
+                            .LoadAsync();
+                        }
+                    }
+                }
+            }
+
+            // If no matching tag is found, still get MatchingPosts separately
+            List<Post> matchingPosts = await _context.Posts
+                .Where(p => p.Title.Contains(input))
+                .Include(p => p.Owner)
+                .Include(p => p.ParticipantPosts)
+                .Include(p => p.PostTags)
+                    .ThenInclude(pp => pp.Tag)
+                .ToListAsync();
+
+            List<Post> tagPosts = result?.TagPosts ?? new List<Post>();
+            ViewBag.InputString = input;
+            return View((matchingPosts, tagPosts));
+        }
         public IActionResult Privacy()
         {
             return View();
@@ -36,5 +88,27 @@ namespace WebProject.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateTag(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                ModelState.AddModelError(string.Empty, "Tag name is required.");
+                return View(); // You can also return to a specific view if needed
+            }
+
+            var tag = new Tag
+            {
+                Name = name
+            };
+
+            _context.Tags.Add(tag); // Add the tag to the DbContext
+            await _context.SaveChangesAsync(); // Save changes to the database
+
+            return RedirectToAction("Index", "Home"); // Redirect to home page after successful save
+        }
+
     }
 }

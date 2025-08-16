@@ -1,10 +1,14 @@
-﻿.container {
+﻿* {
+    font-family: "IBM Plex Sans Thai";
+}
+
+.container {
     position: relative;
     max-width: fit-content;
     margin: auto;
 }
 
-.profile {
+.profile img {
     width: 75px;
     height: 75px;
     border-radius: 50%;
@@ -19,7 +23,7 @@ body {
 .owner {
     display: flex;
     align-items: center;
-    color: white;
+    color: #ffffe9;
     margin: 10px 10px;
 }
 
@@ -28,9 +32,19 @@ body {
         font-weight: normal;
     }
 
+        .owner h2 a {
+            font-size: 35px;
+            font-weight: bold;
+            color: #ffffe9;
+        }
+
+            .owner h2 a:hover {
+                color: #7bc8ff; /* Optional: Add hover color */
+            }
+
 .content {
     background-color: #ffffe9;
-    border-radius: .5rem;
+    border-radius: 20px;
     max-width: 60vw;
     min-width: 60vw;
     position: relative;
@@ -85,16 +99,18 @@ body {
 }
 
 .content .join {
+    margin-top: 10px;
     color: white;
-    background-color: #7bc8ff;
-    border: 1px solid black;
+    background-color: #6eacda;
 }
 .content .cancle {
-    color: black;
-    background-color: darkorange;
+    margin-top: 10px;
+    color: white;
+    background-color: #ff5757;
 }
 .content .close {
-    color: #7bc8ff;
+    margin-top: 10px;
+    color: white;
     background-color: #04346e;
 }
 .content .full{
@@ -104,44 +120,141 @@ body {
 }
 
 .participant {
+    padding: 20px; /* Increase padding to create space inside the border */
+    margin: 5px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
     background-color: #ffffe9;
-    border-radius: .5rem;
-    display: none;
 }
 
-    .participant h3 {
+    .participant h2 {
         color: #04346e;
+        margin-bottom: 20px;
     }
 
 .comment-container {
     background-color: #ffffe9;
-    border-radius: .5rem;
+    border-radius: 20px;
     max-width: 60vw;
     position: relative;
-    padding: 5px 30px 10px 30px;
+    padding: 20px 40px;
     margin-bottom: 20px;
 }
 
-.comment {
-    padding: 5px;
-    margin: 5px;
-    margin-bottom: 7px;
-    border-radius: 5px;
-    box-shadow: 0 5px 10px;
-}
-
-.comments {
-    margin-bottom: 30px;
-}
-
-form {
-    margin: auto;
-}
-
-    form input {
-        width: auto;
+    .comment-container h2 {
+        color: #04346e;
     }
 
+    .comment {
+        padding: 10px;
+        margin: 5px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        background-color: #fdfdf0;
+    }
+
+    .comment:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
+    }
+
+.comments {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between comments */
+}
+
+form input {
+    width: 96%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+}
+form button {
+    width: 100%;
+    padding: 10px 200px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Profile image styling for comments and participants */
+.comment img, .participant img {
+    width: 50px; /* Set a fixed size */
+    height: 50px;
+    border-radius: 50%; /* Make it round */
+    background-color: grey; /* Fallback color */
+    margin-right: 15px; /* Add some space between image and text */
+}
+
+/* For the comment container */
+.comment {
+    display: flex;
+    align-items: flex-start; /* Align items at the start */
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fdfdf0;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+    .comment h4 {
+        color: #04346e; /* Change the color of the username */
+        margin: 0; /* Remove default margin */
+        margin-bottom: 5px;
+    }
+
+    .comment p {
+        margin: 0; /* Remove default margin */
+        padding-left: 10px; /* Optional: Add space to the left of the comment text */
+    }
+
+/* For the participant container */
+.participant ol {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.participant img {
+    width: 50px; /* Set a fixed size */
+    height: 50px;
+    border-radius: 50%; /* Make it round */
+    background-color: grey; /* Fallback color */
+    margin-right: 0px; /* Increase margin to add more space */
+}
+
+.participant li {
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+    font-size: 16px;
+}
+
+    .participant li img {
+        margin-right: 50px;
+    }
+
+    /* Optionally, add hover effect on participant's name */
+    .participant li:hover {
+        color: #7bc8ff;
+    }
+
+
+    
 @media screen and (orientation: portrait) {
     .content ul {
         flex-wrap: wrap;
@@ -158,4 +271,36 @@ form {
             align-self: center;
             margin: 20px 0 0 0;
         }
+
+    form button {
+        padding: 10px 0; /* ลด padding ให้พอดีกับขนาดหน้าจอ */
+        font-size: 14px; /* ลดขนาดตัวอักษรให้พอดีกับหน้าจอ */
+    }
+
+    form input {
+        padding: 10px 0; /* ลด padding ให้พอดีกับขนาดหน้าจอ */
+        font-size: 14px; /* ลดขนาดตัวอักษรให้พอดีกับหน้าจอ */
+    }
+    .comment-container{
+        margin: auto;
+    }
+    .content {
+        margin: auto;
+        margin-bottom: 15px;
+    }
+/*    .owner{
+        justify-content: center;
+    }*/
+
+    .content ul li{
+        font-size: 15px;
+    }
+
+    .owner h2, .owner h2 a{
+        font-size: 25px;
+    }
+
+    .content h1{
+        font-size: 30px;
+    }
 }

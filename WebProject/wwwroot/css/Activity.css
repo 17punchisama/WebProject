@@ -1,4 +1,8 @@
-﻿body {
+﻿* {
+    font-family: "IBM Plex Sans Thai";
+}
+
+body {
     background-color: #04346e;
     color: #ffffe9;
 }
@@ -18,7 +22,7 @@
     display: flex;
     align-items: center;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
     .owner img {
@@ -32,12 +36,12 @@
     .owner h2 {
         font-size: 35px;
         font-weight: bold;
-        color: #ffffe9;
+        color: #e2e2b7;
     }
 
 .profile-link {
     padding: 0px 10px;
-    background-color: #ffffe9;
+    background-color: #e2e2b7;
     border-radius: 20px;
     text-decoration: none;
     color: black;
@@ -47,12 +51,16 @@
 }
 
     .profile-link:hover {
-        background-color: #6fa5cc;
+        background-color: #d5d58f;
     }
 
 
 .owner button:hover {
     background-color: #6fa5cc;
+}
+
+.content-container h2 {
+    margin-top: 40px;
 }
 
 .content-container {
@@ -182,4 +190,41 @@
     font-weight: bold;
     color: #04346e;
     cursor: pointer;
+}
+
+@media only screen and (orientation: portrait){
+    .activity-item div {
+        font-size: 14px;
+    }
+    .activity-item p {
+        flex-grow: 1;
+        font-size: 18px;
+    }
+
+    h2 {
+        font-size: 19px;
+    }
+
+    .owner h2 {
+        font-size: 25px;
+    }
+    .container {
+        margin-top: 15px;
+        padding: 20px;
+    }
+
+    .owner {
+        margin-bottom: 20px;
+    }
+
+    .content-container{
+        margin-top: 20px;
+    }
+    .content-container h2{
+        margin-top: 15px;
+    }
+    .container{
+        margin-top: 15px;
+        padding-top: 0;
+    }
 }

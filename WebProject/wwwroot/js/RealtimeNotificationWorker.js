@@ -7,10 +7,24 @@
 
 async function fetchNotifications() {
     try {
-        const response = await fetch('/Notification/GetNoti'); // Fetch from backend
-        const notifications = await response.json(); // Parse JSON response
-        self.postMessage(notifications); // Send data to main thread
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/Notification/GetNoti", true);
+        xhr.responseType = "json";
+
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                self.postMessage(xhr.response); // Send data to main thread
+            } else {
+                console.error("Error fetching notifications:", xhr.statusText);
+            }
+        };
+
+        xhr.onerror = function () {
+            console.error("Network error while fetching notifications.");
+        };
+
+        xhr.send();
     } catch (error) {
         console.error("Error fetching notifications:", error);
-    }
+    } 
 }

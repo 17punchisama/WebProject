@@ -1,0 +1,180 @@
+﻿@model (List<Post> matchingPosts, List<Post> tagPosts)
+@{
+    ViewData["Title"] = "Search Result Page";
+    ViewData["Style"] = "Search";
+    ViewData["Script"] = "Search";
+}
+
+<div class="header">
+    <h2>ผลการค้นหาของ @ViewBag.InputString</h2>
+</div>
+
+
+
+<!-- Navigation tabs -->
+<div class="nav-tabs">
+    <button class="nav-tab active all">ทั้งหมด</button>
+    <button class="nav-tab match">ชื่อเรื่อง</button>
+    <button class="nav-tab tag">แท็ก</button>
+</div>
+
+
+<div class="activity-grid all-post">
+    @foreach (var post in Model.tagPosts.Union(Model.matchingPosts).ToList())
+    {
+        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+            <div class="activity-card">
+                <div class="card-header">
+                    <h2 class="card-title">@post.Title</h2>
+                    @if (post.ParticipantPosts.Count() < post.ParticipantAmount)
+                    {
+                        <span class="status-badge">ผู้สมัคร @post.ParticipantPosts.Count()/@post.ParticipantAmount</span>
+                    }
+                    else
+                    {
+                        <span class="status-badge full">เต็ม</span>
+                    }
+                </div>
+                <div class="card-tags">
+                    @foreach (var pt in post.PostTags)
+                    {
+                        <span>#@pt.Tag.Name</span>
+                    }
+                </div>
+                <p class="card-description">
+                    @post.Description
+                </p>
+                <div class="card-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>@post.Owner.Name</span>
+                </div>
+                <div class="card-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>@post.EndDate.ToString("dd MMMM yyyy")</span>
+                </div>
+                <div class="card-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>@post.EndDate.ToString("HH:MM")</span>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+<div class="activity-grid match-post">
+    @foreach (var post in Model.matchingPosts)
+    {
+        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+            <div class="activity-card">
+                <div class="card-header">
+                    <h2 class="card-title">@post.Title</h2>
+                    @if (post.ParticipantPosts.Count() < post.ParticipantAmount)
+                    {
+                        <span class="status-badge">ผู้สมัคร @post.ParticipantPosts.Count()/@post.ParticipantAmount</span>
+                    }
+                    else
+                    {
+                        <span class="status-badge full">เต็ม/ต่อคิว</span>
+                    }
+                </div>
+                <div class="card-tags">
+                    @foreach (var pt in post.PostTags)
+                    {
+                        <span>#@pt.Tag.Name</span>
+                    }
+                </div>
+                <p class="card-description">
+                    @post.Description
+                </p>
+                <div class="card-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>@post.Owner.Name</span>
+                </div>
+                <div class="card-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>@post.EndDate.ToString("dd MMMM yyyy")</span>
+                </div>
+                <div class="card-meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>@post.EndDate.ToString("HH:MM")</span>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+<div class="activity-grid tag-post">
+    @foreach (var post in Model.tagPosts)
+    {
+        if (!post.IsClosed)
+        {
+            <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                <div class="activity-card">
+                    <div class="card-header">
+                        <h2 class="card-title">@post.Title</h2>
+                        @if (post.ParticipantPosts.Count() < post.ParticipantAmount)
+                        {
+                            <span class="status-badge">ผู้สมัคร @post.ParticipantPosts.Count()/@post.ParticipantAmount</span>
+                        }
+                        else
+                        {
+                            <span class="status-badge full">เต็ม</span>
+                        }
+                    </div>
+                    <div class="card-tags">
+                        @foreach (var pt in post.PostTags)
+                        {
+                            <span>#@pt.Tag.Name</span>
+                        }
+                    </div>
+                    <p class="card-description">
+                        @post.Description
+                    </p>
+                    <div class="card-meta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>@post.Owner.Name</span>
+                    </div>
+                    <div class="card-meta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        <span>@post.EndDate.ToString("dd MMMM yyyy")</span>
+                    </div>
+                    <div class="card-meta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>@post.EndDate.ToString("HH:MM")</span>
+                    </div>
+                </div>
+            </a>
+        }
+    }
+</div>

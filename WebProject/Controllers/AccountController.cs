@@ -7,6 +7,9 @@ using WebProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using WebProject.Data;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace WebProject.Controllers
 {
@@ -48,11 +51,11 @@ namespace WebProject.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        ModelState.AddModelError(string.Empty, "รหัสผ่านผิด");
                         return View(model);
                     }
                 }
-                ModelState.AddModelError(string.Empty, "User not found.");
+                ModelState.AddModelError(string.Empty, "ไม่พบชื่อผู้ใช้");
                 return View(model);
             }
             return View(model);
@@ -87,7 +90,9 @@ namespace WebProject.Controllers
                     Email = model.Email,
                     PhoneNumber = model.TelNumber,
                     Name = "User",
-                    Gender = model.Gender
+                    Gender = model.Gender,
+                    Year = model.Year,
+                    ImgURL = model.ImageURL,
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -180,5 +185,90 @@ namespace WebProject.Controllers
             }).ToList();
             return Json(posts);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfile(string Name, string Email, string PhoneNumber)
+        {
+            // ดึงข้อมูลผู้ใช้ที่กำลังล็อกอิน
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                // Retrieve the imageURL of the current user
+                var currentImageUrl = user.ImgURL; // Assuming ImageURL is a property of User model
+                Console.WriteLine($"Current Image URL: {currentImageUrl}");
+
+                // Check if the ModelState is valid after getting the current user info
+                if (ModelState.IsValid)
+                {
+                    Console.WriteLine("Check");
+                    // Update user details
+                    user.Name = Name;
+                    user.Email = Email;
+                    user.PhoneNumber = PhoneNumber;
+
+
+                    // Update the user in the database
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Profile");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+            }
+
+            // Return to the Profile page if the user is null or ModelState is not valid
+            return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditImgProfile(IFormFile ProfileImage)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null && ProfileImage != null)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ProfileImage.FileName);
+
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ProfileImage.CopyToAsync(fileStream);
+                }
+
+                user.ImgURL = "/images/" + fileName;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Profile"); 
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+
+            return Content("Error updating image.");
+        }
+
+
+
+
+
     }
 }

@@ -10,6 +10,10 @@ namespace WebProject.Models
         public Gender Gender { get; set; }
         public int Year { get; set; }
 
+        public string ImgURL { get; set; }
+
+        public string? PhoneNumber { get; set; }
+        
         public ICollection<Post> Posts { get; set; } = new List<Post>();
 
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();

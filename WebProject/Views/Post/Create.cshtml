@@ -8,7 +8,7 @@
 
 <div class="container">
 	<div class="content-box">
-		<h1>กิจกรรมแบบไม่มีรายได้</h1>
+		<h1>สร้างกิจกรรมของคุณ</h1>
 		<form asp-controller="Post" asp-action="Create" method="post">
 			<div class="text-title">
 				<p>*กรุณางดใช้ชื่อผลงาน ที่สื่อถึงกิจกรรมทางเพศ มีสถานการณ์ยั่วยุทางเพศ หรือสื่อถึงอวัยวะเพศ</p>
@@ -35,8 +35,8 @@
 			</div>
 			<div class="date-age-gender">
 				<div class="date-selector">
-					<p>วันและเวลาของกิจกรรม</p>
-					<input id="date" type="datetime-local" asp-for="EndDate">
+					<p>วันปิดรับสมัคร</p>
+					<input id="date" type="datetime-local" asp-for="EndDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")">
 					<span class="error" asp-validation-for="EndDate"></span>
 				</div>
 				<div class="year">
@@ -70,8 +70,8 @@
 							<label for="Female">หญิง</label>
 						</li>
 						<li>
-							<input type="checkbox" value="2" name="RequiredGenders" id="LGTV" @isCheck(Gender.LGTV)>
-							<label for="LGTV">คต</label>
+							<input type="checkbox" value="2" name="RequiredGenders" id="LGTV" @isCheck(Gender.LGBTQ)>
+							<label for="LGTV">อิ่นๆ</label>
 						</li>
 					</ul>
 					<span asp-validation-for="RequiredGenders" class="error"></span>
@@ -84,8 +84,9 @@
 					<span asp-validation-for="ParticipantAmount" class="error"></span>
 				</div>
 				<div class="period">
-					<p>ระยะเวลารับสมัคร</p>
-					<input type="datetime-local">
+					<p>วันและเวลาของกิจกรรม</p>
+					<input type="datetime-local" asp-for="ActivityDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"/>
+					<span class="error" asp-validation-for="ActivityDate"></span>
 				</div>
 			</div>
 			<div class="location">

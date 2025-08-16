@@ -11,6 +11,7 @@ namespace WebProject.Models
         public List<int> Years { get; set; } = [];
         public List<Gender> RequiredGenders { get; set; } = [];
         public DateTime EndDate { get; set; }
+        public DateTime ActivityDate {  get; set; }
         public string Location { get; set; }
         public bool IsClosed { get; set; } = false;
 
